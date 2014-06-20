@@ -1,6 +1,6 @@
 # Requirements for simple-flask
 
-Flask=0.10.1
+Flask==0.10.1
 Jinja2==2.7.1
 argparse==1.2.1
 pymongo==2.6.3
