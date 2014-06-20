@@ -118,8 +118,8 @@ def upload_data(migration_id):
     logging.info('Uploading binary data for {0}'.format(as_uuid))
     # TODO: use a query arg for the file name extension, or even the full name
     fname = build_fname(migration_id)
-    if not os.path.exists(os.path.basename(fname)):
-        os.mkdir(os.path.basename(fname))
+    if not os.path.exists(os.path.dirname(fname)):
+        os.mkdir(os.path.dirname(fname))
     with open(fname, 'w') as file_out:
         file_out.write(request.data)
     resp_data = {
