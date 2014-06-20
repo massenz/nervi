@@ -90,11 +90,7 @@ def build_fname(migration_id, ext):
 # Views
 @application.route('/')
 def home():
-    # user_id = 'unknown'
-    # if 'user_id' in request.args:
-    #     user_id = request.args['user_id']
-    # return render_template('index.html', user_id=user_id, workdir=get_workdir())
-    return 'hello'
+    return render_template('index.html', workdir=get_workdir())
 
 @application.route('/api/v1/<migration_id>', methods=['POST'])
 def upload_data(migration_id):
