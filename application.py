@@ -40,7 +40,7 @@ application = Flask(__name__)
 # TODO: read from config.yaml instead
 MAX_RETRIES = 30
 RETRY_INTERVAL = 1
-DEFAULT_NAME = 'migration_logs.zip'
+DEFAULT_NAME = 'migration_logs'
 
 # TODO: Move to a configuration method, values retrieved from config.yaml and parse_args()
 application.config['DEBUG'] = False
@@ -71,20 +71,6 @@ class UuidNotValid(ResponseError):
     status_code = 406
 
 
-def parse_args():
-    """ Parse command line arguments and returns a configuration object
-    """
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-p', '--port', help="The port for the server to listen on",
-                        default=5050)
-    parser.add_argument('-v', '--verbose', action='store_true', help='Enables debug logging')
-    parser.add_argument('--debug', action='store_true', help="Turns on debugging/testing mode and "
-                                                             "disables authentication")
-    parser.add_argument('--work-dir', help="Where to store files, must be an absolute path",
-                        default='/var/lib/migration-logs')
-    return parser.parse_args()
-
-
 def get_workdir():
     workdir = application.config['WORKDIR']
     if not os.path.isabs(workdir):
@@ -92,13 +78,14 @@ def get_workdir():
     return workdir
 
 
-def build_fname(migration_id):
+def build_fname(migration_id, ext):
     workdir = get_workdir()
     timestamp = datetime.datetime.now().isoformat()
     # Remove msec part and replace colons with dots (just to avoid Windows stupidity)
     prefix = timestamp.rsplit('.')[0].replace(':', '.')
-    return os.path.join(workdir, migration_id, '{prefix}_{name}'.format(
-        prefix=prefix, name=DEFAULT_NAME))
+    return os.path.join(workdir, migration_id, '{prefix}_{name}.{ext}'.format(
+        prefix=prefix, name=DEFAULT_NAME, ext=ext))
+
 
 # Views
 @application.route('/')
@@ -117,7 +104,8 @@ def upload_data(migration_id):
         raise UuidNotValid("Could not convert {0} to a valid UUID".format(migration_id))
     logging.info('Uploading binary data for {0}'.format(as_uuid))
     # TODO: use a query arg for the file name extension, or even the full name
-    fname = build_fname(migration_id)
+    file_type = request.args.get('type', 'zip')
+    fname = build_fname(migration_id, ext=file_type)
     if not os.path.exists(os.path.dirname(fname)):
         os.mkdir(os.path.dirname(fname))
     with open(fname, 'w') as file_out:
@@ -139,19 +127,17 @@ def handle_invalid_usage(error):
     return response
 
 
+def prepare_env():
+    application.config['DEBUG'] = os.getenv('FLASK_DEBUG', True)
+    application.config['TESTING'] = os.getenv('FLASK_TESTING', True)
+    application.config['WORKDIR'] = os.getenv('FLASK_WORKDIR', '/tmp')
+
+
 def run_server():
-    # TODO: replace with OS Env variable (for AWS Beanstalk)
-    # config = parse_args()
     loglevel = logging.DEBUG
     logging.basicConfig(format=FORMAT, datefmt=DATE_FMT, level=loglevel)
-    # Initialize the private key global
-    logging.warn("Running in TESTING mode: this disables security checks, DO NOT use in "
-                 "Production")
-    application.config['DEBUG'] = True
-    application.config['TESTING'] = True
-    # TODO: read OS Env variable instead
-    application.config['WORKDIR'] = '/tmp'
-    application.run(host='0.0.0.0', debug=True)
+    prepare_env()
+    application.run(host='0.0.0.0')
 
 
 if __name__ == '__main__':
