@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <form action="/login" method="POST" name="login_user_form">
+        <p>Username:&nbsp;&nbsp;<input id="email" name="email" type="text" /></p>
+        <p>Password:&nbsp;&nbsp;<input id="password" name="password" type="password"></p>
+        <input type="submit" value="Login"><br/>
+        <input id="next" name="next" type="hidden" value="{{ next }}">
+    </form>
+</body>
+</html>

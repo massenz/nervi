@@ -1,0 +1,822 @@
+/* CSS Document */
+@charset "utf-8";
+img {behavior: url(includes/pngbehavior.htc);}
+* {margin:0; padding:0;}
+
+body {font:12px/12px Arial, Helvetica, sans-serif; color:#232323; /*background:url(../images/bodybg.gif) repeat-x 0 0 #cccaca;*/ background:#f1f1f1}
+body.none {background:none;}
+
+@font-face {
+    font-family: 'HelveticaWorldRegular';
+    src: url('fonts/helveticaworld-regular.eot');
+    src: url('fonts/helveticaworld-regular.eot?#iefix') format('embedded-opentype'),
+         url('fonts/helveticaworld-regular.woff') format('woff'),
+         url('fonts/helveticaworld-regular.ttf') format('truetype'),
+         url('fonts/helveticaworld-regular.svg#helveticaworld-regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'HelveticaWorldBold';
+    src: url('fonts/helveticaworld-bold.eot');
+    src: url('fonts/helveticaworld-bold.eot?#iefix') format('embedded-opentype'),
+         url('fonts/helveticaworld-bold.woff') format('woff'),
+         url('fonts/helveticaworld-bold.ttf') format('truetype'),
+         url('fonts/helveticaworld-bold.svg#helveticaworld-bold') format('svg');
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MyriadWebPro';
+    src: url('fonts/myriadwebpro_0.eot');
+    src: url('fonts/myriadwebpro_0.eot?#iefix') format('embedded-opentype'),
+         url('fonts/myriadwebpro_0.woff') format('woff'),
+         url('fonts/myriadwebpro_0.ttf') format('truetype'),
+         url('fonts/myriadwebpro_0.svg#myriadwebpro_0') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MyriadProRegular';
+    src: url('fonts/myriadpro-regular.eot');
+    src: url('fonts/myriadpro-regular.eot?#iefix') format('embedded-opentype'),
+         url('fonts/myriadpro-regular.woff') format('woff'),
+         url('fonts/myriadpro-regular.ttf') format('truetype'),
+         url('fonts/myriadpro-regular.svg#myriadpro-regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'AvenirHeavy';
+    src: url('fonts/avenir-heavy.eot');
+    src: url('fonts/avenir-heavy.eot?#iefix') format('embedded-opentype'),
+         url('fonts/avenir-heavy.woff') format('woff'),
+         url('fonts/avenir-heavy.ttf') format('truetype'),
+         url('fonts/avenir-heavy.svg#avenir-heavy') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+	font-family: 'my_font';
+	src: url('fonts/Panic.eot');
+	src: url('fonts/Panic.eot?#iefix') format('embedded-opentype'),
+		url('fonts/Panic.woff') format('woff'),
+		url('fonts/Panic.ttf') format('truetype');
+	font-weight: normal;
+    font-style: normal;
+}
+
+h1, h2, h3, h4, h5, h6, ul, li {margin:0; padding:0; list-style:none; font-weight:normal;}
+a:focus{outline:none;}
+
+img {border:none;}
+.br, .clear {clear:both; margin:0px; padding:0px;}
+
+.chkbox {border:none;}
+select, input, textarea{font:12px Arial, Helvetica, sans-serif;}
+
+textarea{ overflow:auto;}
+
+.bold{font-weight:bold;}
+.italic{font-style:italic;}
+
+.floatl{float:left;}
+.floatr{float:right;}
+.txtr {text-align:right;}
+.txtj {text-align:justify;}
+
+.lh18 {line-height:18px;}
+.text11 {font-size:11px;}
+.margin {margin:0px;}
+
+/* ------------------ Wrap --------------------*/
+#outer_wrap{width:100%;}
+.w100p {width:100%;}
+
+#wrap {width:997px; margin:0 auto; background:#fff;}/*982px*/
+/* ------------------ Main Wrap --------------------*/
+
+#logo {float:left; padding:5px 18px 2px 0;}
+.bookmark {float:left; padding:13px 16px 0 0;}
+.telephone {float:right; padding-top:13px; width:300px; text-align:right;}
+.telephone p {font:bold 14px Arial, Helvetica, sans-serif; color:#275581; text-align:right;}
+.telephone p a {color:#275581; text-decoration:underline;}
+.telephone p a:hover {text-decoration:none;}
+.myaccount {float:right; padding:13px 3px 0 0;}
+.myaccount p {font:bold 14px Arial, Helvetica, sans-serif; color:#275581;}
+.myaccount p a {color:#275581; text-decoration:underline;}
+.myaccount p a:hover {text-decoration:none;}
+.padb10 {padding-bottom:10px;}
+.padb40 {padding-bottom:40px;}
+
+#search_login { width:997px; height:32px; background:url(../images/nav-bar-slice.jpg);}
+
+#search_login .searchControl table{width:"100%"};
+
+#search_login li {float:left;}
+#search_login li.search {background:url(../images/search_bg.gif); height:28px; width:588px; margin-top:2px;}
+#search_login li.search .icon {float:left; padding:8px 8px 0 0;}
+#search_login li.search input[type=text] {background:none; border:none; font:12px Arial, Helvetica, sans-serif; color:#888a8a; padding:8px 6px 3px 0; width:452px; float:left;}
+#search_login li.search input[type=button] { background:url(/images/buttons/search_btn.png) no-repeat; border:none; padding:0; width:93px; height:28px; float:left; cursor:pointer;font-family:Arial, sans-serif;font-weight:bold;color:white}
+
+
+
+#search_login li.register {float:right; margin-top:-2px; width:107px;  /*width:107px;*/}
+#search_login li.login {float:right; margin-top:-2px; width:173px;}
+#search_login li.login a {background:url(../images/studentlogin.gif) no-repeat top; width:173px; height:37px; display:block; text-decoration:none; cursor:pointer;}
+#search_login li.login a:hover, #search_login li.login a.selected {background:url(../images/studentlogin.gif) no-repeat bottom;}
+#search_login li.login #login {position:absolute; width:255px; margin:37px 0 0 -73px; z-index:15;}
+#search_login li.login #login .h5 {height:5px;}
+#search_login li.login #login .h9 {height:9px;}
+#search_login li.login #login .bg {background:url(../images/student_loginbg.png);}
+#search_login li.login #login .bg ul {padding:14px 0 0 25px;}
+#search_login li.login #login .bg li {margin-bottom:6px; float:none;}
+#search_login li.login #login .bg label {font:11px Arial, Helvetica, sans-serif; color:#fff;}
+#search_login li.login #login .bg input.textbox {border:1px solid #898989; border-left:1px solid #898989; border-bottom:none; border-right:none; font:11px Arial, Helvetica, sans-serif; color:#898989;  padding:3px 4px; width:160px;}
+#search_login li.login #login .bg a.forgot {background:url(../images/arrow_blue01.gif) no-repeat; padding-left:14px; font:11px Arial, Helvetica, sans-serif; color:#fff; text-decoration:underline; height:auto; margin-bottom:10px;}
+#search_login li.login #login .bg .dash {margin:0 10px 2px 7px; background:url(../images/student_login_dash.gif); height:4px;}
+#search_login li.login #login .bg a:hover.forgot {text-decoration:none;}
+#search_login li.login #login .bg input[type=checkbox] {float:left; border:none; padding:0; margin:5px 5px 0 24px; *margin:1px 2px 0 21px;}
+#search_login li.login #login .bg label.check {float:left; margin:5px 0 7px 0;}
+#search_login li.login #login .bg input[type=button] {background:url(../images/buttons/signin.gif) no-repeat; width:78px; height:25px; cursor:pointer; margin:3px 0 0 82px; padding:0; border:none;}
+
+#nav_state {margin-top:-1px; *margin-top:-1px; /*padding-bottom:24px;*margin-bottom:25px;*/ }
+/*#nav_state li {float:left; margin-right:52px;}
+
+#nav_state li.navspacer {margin-left:0; margin-right:58px;}
+#nav_state li.navspacer a {background:url(../images/navspacer.png) no-repeat top; width:60px; height:34px; display:block; text-decoration:none; cursor:pointer;}
+#nav_state li.navspacer a:hover, #nav_state li.navspacer a.active {background:url(../images/navspacer.png) no-repeat bottom;}
+
+#nav_state li.navhome {margin-left:0; margin-right:58px;}
+#nav_state li.navhome a {background:url(../images/navhome.gif) no-repeat top; width:60px; height:34px; display:block; text-decoration:none; cursor:pointer;}
+#nav_state li.navhome a:hover, #nav_state li.navhome a.active {background:url(../images/navhome.gif) no-repeat bottom;}
+
+#nav_state li.navabout a {background:url(../images/navabout.gif) no-repeat top; width:83px; height:34px; display:block; text-decoration:none; cursor:pointer;}
+#nav_state li.navabout a:hover, #nav_state li.navabout a.active {background:url(../images/navabout.gif) no-repeat bottom;}
+#nav_state li.navhow a {background:url(../images/navhow.gif) no-repeat top; width:107px; height:34px; display:block; text-decoration:none; cursor:pointer;}
+#nav_state li.navhow a:hover, #nav_state li.navhow a.active {background:url(../images/navhow.gif) no-repeat bottom;}
+#nav_state li.nav247support a {background:url(../images/nav247support.gif) no-repeat top; width:107px; height:34px; display:block; text-decoration:none; cursor:pointer;}
+#nav_state li.nav247support a:hover, #nav_state li.nav247support a.active {background:url(../images/nav247support.gif) no-repeat bottom;}
+#nav_state li.navhelpfaq {margin-right:33px;}
+#nav_state li.navhelpfaq a {background:url(../images/navhelpfaq.gif) no-repeat top; width:91px; height:34px; display:block; text-decoration:none; cursor:pointer;}
+#nav_state li.navhelpfaq a:hover, #nav_state li.navhelpfaq a.active {background:url(../images/navhelpfaq.gif) no-repeat bottom;}*/
+#nav_state li.pick {background:url(../images/pickbg.gif); height:34px; width:300px; margin:0;}
+#nav_state li.pick, #ie8#fix {background:url(../images/pickbg.gif); height:34px; width:302px; margin:-1px 0 0 0; *margin:0;}
+
+#nav_state li.pick label {float:left; font:12px Arial, Helvetica, sans-serif; color:#275581; padding:7px 8px 0 8px;}
+#nav_state li.pick label, #ie8#fix {float:left; font:12px Arial, Helvetica, sans-serif; color:#275581; padding:4px 8px 0 8px; *padding-top:7px;}
+#nav_state li.pick select {font:12px Arial, Helvetica, sans-serif; float:left; color:#000; padding:1px 1px 1px 0; margin-right:7px; margin-top:6px;}
+#nav_state li.pick select option {padding-left:1px;}
+#nav_state li.pick input[type=button] {background:url(../images/buttons/go.gif) no-repeat; border:none; padding:0; width:42px; height:19px; float:left; cursor:pointer; margin-top:8px;}
+
+
+
+#home_banner {float:left; background:url(../images/home_banner.jpg); width:661px; height:254px; margin-right:36px; margin-left:14px;}
+#home_banner #seal {position:absolute; width:120px; height:119px; margin:-3px 0 0 -39px;}
+#home_banner h2 {font-family: Arial, Helvetica, sans-serif; font-size:23px; padding:25px 0 13px 232px; color:#3f76aa; line-height:23px;}
+#home_banner ul {margin-left:232px;}
+#home_banner li {background:url(../images/bullet_grey.gif) no-repeat 0 2px; padding:0 5px 5px 9px; font:bold 11px Arial, Helvetica, sans-serif; color:#918e8d;}
+#home_banner .price {float:left; width:200px; padding:20px 0 0 232px; text-align:center;}
+#home_banner a.register {background:url(../images/buttons/register_now.png) no-repeat top; width:186px; height:47px; cursor:pointer; float:left;}
+#home_banner a:hover.register {background:url(../images/buttons/register_now.png) no-repeat bottom;}
+
+/*#daily_deal {float:left; background:url(../images/daily_deal_bg.jpg); width:275px; height:239px; padding:17px 0 0 25px;}*/
+#daily_deal {position:absolute; background:url(../images/daily_deal_bg.jpg); width:256px; height:228px; padding:17px 0 0 25px; margin-left:703px; *margin-left:-8px; margin-top:-4px;}
+
+#slider {background:url(../images/sliderbg.gif) repeat-x #fff ; height:100px; padding:0px 0 27px 0; *margin-top:7px; width:970px; margin-left:14px; margin-right:14px;}
+#slider .left {background:url(../images/slider_left.jpg); width:25px; text-align:center; padding-top:39px; height:60px; float:left;}
+#slider .data {float:left; width:936px; padding:10px 0 0 5px;}
+#slider .data li {float:left; margin-right:6px;}
+#slider .right {background:url(../images/slider_right.jpg); width:26px; text-align:center; padding-top:39px; height:60px; float:left;}
+
+#home_tabs { background-color:#fff;  *background-color:#fff; margin:0; padding:0 14px 0 14px;}
+#home_tabs li {float:left; border-left:1px solid #b8b7b7; border-bottom:1px solid #ccc; padding:0 0 10px 12px; margin:0 88px 27px 0; width:251px;}
+#home_tabs li.marr0 {margin-right:0;}
+#home_tabs li h2 {font:18px/18px Arial, Helvetica, sans-serif; color:#3f76aa; margin-bottom:5px;}
+#home_tabs li h2 a {color:#3f76aa; text-decoration:none;} #home_tabs li h2 a:hover {color:#3f76aa; text-decoration:underline;}
+#home_tabs li p {font:12px/13px Arial, Helvetica, sans-serif; color:#817e7d; margin-bottom:5px;}
+#home_tabs li p a {color:#be700a; text-decoration:none;} #home_tabs li p a:hover {color:#3f76aa; text-decoration:none;}
+
+h3.welcome {background:#deecf9; font:18px/18px Arial, Helvetica, sans-serif; color:#4077ab; padding:5px 0 10px 27px; margin:0 14px;}
+.welcomebox {border-left:2px solid #deecf9; border-bottom:2px solid #deecf9; border-right:2px solid #deecf9; overflow:auto; height:363px; width:966px; background:#fff; margin:0 14px;}
+.welcomebox .pad {padding:15px 22px 15px 27px;}
+.welcomebox .pad .line {background:#6c8da7; height:1px; margin:28px 0 20px 0;}
+.welcomebox .pad p {font:14px/14px Arial, Helvetica, sans-serif; color:#666;}
+.welcomebox .pad p a {font:14px/14px Arial, Helvetica, sans-serif; color:#666; text-decoration:underline;}
+.welcomebox .pad p a:hover {font:14px/14px Arial, Helvetica, sans-serif; color:#666; text-decoration:none;}
+.welcomebox .pad p span.blue {color:#4279ae; font-weight:bold;}
+
+#footer {background:url(../images/footer.gif); width:997px; margin:0 auto;}
+#footer .wrap {width:997px; margin:0px auto; padding-top:17px;}
+
+#footer .wrap .links {float:left; width:124px;}
+#footer .wrap .links.w118 {width:118px;}
+#footer .wrap .links.w134 {width:134px;}
+#footer .wrap .links.w154 {width:154px;}
+#footer .wrap .links li {font:11px Arial, Helvetica, sans-serif; line-height:15px; background:url(../images/footer_left.gif) repeat-y; margin:0; padding:0 0 3px 11px; *padding:0 0 3px 11px !important;}
+#footer .wrap .links li a {color:#5786bf; text-decoration:none; *padding:0 !important;}
+#footer .wrap .links li a:hover {color:#5786bf; text-decoration:underline;}
+
+#footer .wrap .copyright {padding:5px 20px; font:12px Arial, Helvetica, sans-serif; color:#737373; margin:10px 0; *margin:4px 0 10px 0;} /*background:#cdcdcd; */
+#footer .wrap .copyright span {float:right;}
+
+
+#footer .wrap #social {margin-left:70px; margin-top:15px; width:205px; height:50px;float:left;}
+#footer .wrap #social li {float:left; margin-right:12px;}
+#footer .wrap #social li.marr0 {margin-right:0;}
+
+
+#footer .wrap #icons {margin-top:15px; margin-left:370px; width:350px; float:left;}
+#footer .wrap #icons li {float:left; margin-right:6px;}
+#footer .wrap #icons li.marr10 {margin-right:10px;}
+#footer .wrap #icons li.mart3 {margin-top:3px;}
+#footer .wrap #icons li.mart5 {margin-top:5px;}
+#footer .wrap #icons li.marr0 {margin-right:0;}
+
+
+#leftpart .inner_content li {color:#666; padding-left:31px;} 
+#leftpart .inner_content li{list-style-type: none;font:regular 13px/14px Arial, Helvetica, sans-serif; color:#666; padding-bottom:8px; margin-top:13px;}
+#leftpart .inner_content .faq li {color:#666; padding-left:31px;} 
+#leftpart .inner_content .faq li.question {background:url(../images/icon_question.gif) no-repeat 0 0; font:bold 13px/14px Arial, Helvetica, sans-serif; color:#666; padding-bottom:8px; margin-top:13px;}
+#leftpart .inner_content .faq li.question.mart0 {margin-top:0;}
+#leftpart .inner_content .faq li.answer {background:url(../images/icon_answer.gif) no-repeat 0 1px; font:13px/14px Arial, Helvetica, sans-serif; color:#666; border-bottom:2px solid #D4D1D1; padding-bottom:13px; padding-right:15px;}
+.marb5{ margin-bottom:5px;}
+#leftpart .inner_content .faq li.answer a {color:#666; text-decoration:underline;}
+#leftpart .inner_content .faq li.answer a:hover {color:#666; text-decoration:none;}
+#leftpart .inner_content .faq li.answer.bdrbnon {border-bottom:none;}
+
+#select_course .payment #paypalopt {width:410px; float:left; margin:33px 25px 0 0;}
+
+/*Archana*/
+/*---------------About Us---------------------*/
+/*#leftpart {width:697px; margin-right:56px; float:left;}*/
+#leftpart {width:717px; margin-right:29px; float:left; margin-left:14px;}
+#leftpart h1 {color:#4077ab; background-color:#deecf9; font:18px Arial, Helvetica, sans-serif; padding-left:22px;}
+#leftpart .inner_content{border:1px solid #deecf9; padding:22px;}
+#leftpart .inner_content p{padding-bottom:12px; color:#666666; font:13px/16px Arial, Helvetica, sans-serif; }
+#leftpart .inner_content p a { color:#666666; text-decoration:underline; }
+#leftpart .inner_content p a:hover { color:#666666; text-decoration:none; }
+#leftpart .inner_content p.opportunity{color:#3f76a9; font:15px Arial, Helvetica, sans-serif; border-bottom:1px solid #6c8da7; padding-bottom:50px; margin-bottom:15px;}
+#rightpart {width:230px; float:left; margin-right:7px;}
+#rightpart_payment {width:230px; float:right; margin-right:20px;}
+
+/*#rightpart .tennesse {position:absolute; margin:-8px 0 0 110px;}*/
+#rightpart .california {position:absolute; margin:8px 0 0 110px;}
+
+#rightpart .lefttop{height:10px;}
+#rightpart .mid_bg {background:url(../images/leftpart_mid.jpg) repeat-y; padding:0 15px 0 12px; width:200px;}
+#rightpart .mid_bg h2.padt72{padding-top:88px;}
+#rightpart .mid_bg h2 {font:bold 18px/18px Arial, Helvetica, sans-serif; color:#a1a2a2; border-bottom:1px solid #a1a2a2; margin-bottom:3px; padding-top:15px; *line-height:20px;}
+#rightpart .mid_bg h2 a {font:bold 18px/18px MyriadWebPro, Arial, Helvetica, sans-serif; color:#a1a2a2; text-decoration:none !important;}
+#rightpart .mid_bg h2 a:hover {color:#a1a2a2; text-decoration:underline;}
+#rightpart .mid_bg h2.marb{margin-bottom:10px;}
+#rightpart .mid_bg h2 em {font-size:22px; text-transform:uppercase; font-weight:bold;}
+#rightpart .mid_bg span {font:15px Arial, Helvetica, sans-serif; color:#9da7b4; font-style:italic;}
+#rightpart .mid_bg #question {margin-top:10px;}
+#rightpart .mid_bg #question li {list-style-type:none; background:url(../images/bullet_blue.gif) no-repeat 4px 5px; padding-left:18px; }
+#rightpart .mid_bg #question li a {font:12px/18px Arial, Helvetica, sans-serif; color:#80a6c9; text-decoration:underline;}
+#rightpart .mid_bg #question li a:hover{text-decoration:none;}
+#rightpart .mid_bg #question li.last{background:none; padding-top:6px;}
+
+#rightpart .mid_bg #question li .toolTip {cursor:help; position:relative;}
+#rightpart .mid_bg #question li .toolTip.zindex0 {z-index:0;}
+#rightpart .mid_bg #question li .toolTip.zindex1 {z-index:1;}
+#rightpart .mid_bg #question li .toolTip.zindex2 {z-index:2;}
+#rightpart .mid_bg #question li .toolTip.zindex3 {z-index:3;}
+#rightpart .mid_bg #question li .toolTip.zindex4 {z-index:4;}
+#rightpart .mid_bg #question li .toolTip.zindex5 {z-index:5;}
+/*#rightpart .mid_bg #question li p a {text-decoration:none !important;}*/
+
+/*Tool Tip Starts*/
+#rightpart .mid_bg #question li a span.toolTip  {font:12px/18px Arial, Helvetica, sans-serif; color:#80a6c9; text-decoration:underline;}
+#rightpart .mid_bg #question li a:hover span.toolTip {font:12px/18px Arial, Helvetica, sans-serif; color:#80a6c9; text-decoration:none;}
+
+.toolTipWrapper {/* The wrapper holds its insides together */ width:360px; position:absolute; /* Absolute will make the tooltip float above other content in the page */ top:20px; left:0; display:none; /* It has to be displayed none so that the jQuery fadein and fadeout functions will work */ color:#573b18; font-size:12px; /* A font size is needed to maintain consistancy */ margin:-5px 0 0 -240px; *margin:0 0 0 -240px;}
+.toolTipTop {/* Top section of the tooltip */ width:360px; height:2px; background:transparent url(../images/bubbleTop.gif) no-repeat;}
+.toolTipMid {/* Middle section of the tooltip */ padding:4px 8px 8px 8px; background:url(../images/bubbleMid.gif);}
+.toolTipBtm {/* Bottom Section of the tooltip */ height:2px; background:transparent url(../images/bubbleBtm.gif) no-repeat;}
+/*Tool Tip Ends*/
+
+
+#rightpart .mid_bg .network_sites{padding-top:10px;}
+#rightpart .mid_bg .network_sites a img{border:0; margin:0 5px 10px 0;}
+#rightpart .mid_bg .network_sites a img.last{margin-right:0;}
+
+#rightpart .mid_bg #blog{padding:8px 0 0; margin-bottom:50px;}
+#rightpart .mid_bg #blog li{color:#a1a2a2; font:bold 13px Arial, Helvetica, sans-serif; float:left;}
+#rightpart .mid_bg #blog li.w44{width:44px;}
+#rightpart .mid_bg #blog li.w156{width:156px; padding-top:5px;}
+#rightpart .mid_bg #blog li img{margin-right:2px;}
+#rightpart .mid_bg p{color:#a1a2a2; font:11px Arial, Helvetica, sans-serif;}
+#rightpart .mid_bg p.padb20{padding-bottom:20px;}
+#rightpart .mid_bg #contact{background:#e0ebf7; padding:4px 15px; margin:15px 0 2px;}
+
+#rightpart .mid_bg #contact .contact_through li{float:left;}
+#rightpart .mid_bg #contact .contact_through li.first{border-right:1px solid #a5bad7; padding-right:15px;}
+#rightpart .mid_bg #contact .contact_through li.last{padding-left:45px;} /*15px*/
+#rightpart .mid_bg #contact .contact_through li img{padding: 0 8px 0 10px;}
+#rightpart .mid_bg #contact .contact_through li p{float:left; font: bold 15px Arial, Helvetica, sans-serif; color:#6084bc; text-align:center; padding-left:5px;}
+#rightpart .mid_bg #contact .contact_through li p a{color:#6084bc; text-decoration:none;}
+#rightpart .mid_bg #contact .contact_through li p a:hover{text-decoration:underline;}
+
+/*---------------Register Select Course---------------------*/
+
+#tab {font:17px Arial, Helvetica, sans-serif; text-align:center; position:absolute; margin-left:250px;}
+#tab .tab_white {background:url(../images/course_tab_selected.jpg) no-repeat; color:#4c9eca; float:left; width:235px; height:31px; padding-top:15px;}
+#tab .tab_white.marr {margin-right:10px;}
+#tab .tab_white.marl {margin-left:10px;}
+#tab .tab_grey {background:url(../images/course_tab.jpg) no-repeat; color:#c1c6c9; float:left; width:235px; height:31px; padding-top:15px;}
+
+#select_course {background:url(../images/bg_blue_curve.jpg) no-repeat center top; padding:20px 15px 0 28px; margin-top:43px; /*margin-top:67px;*/}
+#select_course .course_details {float:left; width:645px; margin-right:35px; padding:18px 0 0 20px;}
+#select_course .course_details h1 {font:17px/30px Arial, Helvetica, sans-serif; color:#3489b6; background:url(../images/tab_number01.gif) no-repeat left; padding-left:45px; margin-bottom:20px;}
+#select_course .course_details .blue_box {margin-bottom:35px;}
+#select_course .course_details .top_bg{height:10px;}
+#select_course .course_details .mid_bg {background:url(../images/mid_blue.gif) repeat-y; width:638px; padding:0 0 0 10px;}
+#select_course .course_details .mid_bg .form {padding-bottom:10px; *padding-bottom:20px;}
+#select_course .course_details .mid_bg .form.last {padding-bottom:0;}
+#select_course .course_details .mid_bg .form label {float:left; font:14px Arial, Helvetica, sans-serif; color:#666666; width:250px;}
+#select_course .course_details .mid_bg .form .txt {float:left; font:13px Arial, Helvetica, sans-serif; color:#666666; padding-top:2px;}
+#select_course .course_details .mid_bg .form input, #select_course .course_details .mid_bg .form select {font:13px Arial, Helvetica, sans-serif; color:#666666; width:216px; border:1px solid #aacfe4;}
+#select_course .course_details .mid_bg .form select option {padding-left:3px;}
+#select_course .course_details .mid_bg #online_course li h2 {font:16px Arial, Helvetica, sans-serif; color:#666666; text-align:center; margin-bottom:5px;}
+#select_course .course_details .mid_bg #online_course li {float:left; display:inline;}
+#select_course .course_details .mid_bg #online_course li.w155 {width:155px; margin:30px 0 0 20px;}
+#select_course .course_details .mid_bg #online_course li.w155, #ie8#fix {width:155px; margin:38px 0 0 20px; *margin:30px 0 0 20px;}
+#select_course .course_details .mid_bg #online_course li.w435 {width:435px; padding-bottom:12px;}
+#select_course .course_details .mid_bg #online_course li p {font:14px/18px Arial, Helvetica, sans-serif; color:#666666; padding:0 0 0 20px;}
+#select_course .course_details .mid_bg input.start_course {background:url(../images/buttons/start_course.png) no-repeat top; height:53px; width:155px; display:block; border:none; cursor:pointer;}
+#select_course .course_details .mid_bg input.start_course:hover {background:url(../images/buttons/start_course.png) no-repeat bottom;}
+#select_course .course_details .mid_bg input.review_course {background:url(../images/buttons/register_now.png) no-repeat top; height:53px; width:155px; display:block; border:none; cursor:pointer;}
+#select_course .course_details .mid_bg input.review_course:hover {background:url(../images/buttons/register_now.png) no-repeat bottom;}
+
+/*---------------Register Payment---------------------*/
+#select_course .payment {float:left; width:655px; margin-right:27px; padding:18px 0 0 20px;}
+#select_course .payment h1 {font:17px/30px Arial, Helvetica, sans-serif; color:#3489b6; background:url(../images/tab_number02.gif) no-repeat left; padding-left:45px; margin-bottom:20px;}
+#select_course .payment .padt {padding-top:15px;}
+#select_course .payment .payment_form{margin-left:10px;}
+#select_course .payment .payment_form .marr {margin-right:10px;}
+#select_course .payment .payment_form input {float:left; width:15px; margin:2px 10px 0 0;}
+#select_course .payment .payment_form input.mart {margin-top:7px; *margin-top: 2px;}
+#select_course .payment .payment_form label {float:left; font:bold 15px/15px Arial, Helvetica, sans-serif; color:#666666; margin-right:15px;}
+#select_course .payment .payment_form label.grey_txt {color:#b1b1b1; font-size:14px; margin-top:-3px;}
+#select_course .payment .payment_form label.grey_txt a {color:#b1b1b1; text-decoration:none;}
+#select_course .payment .payment_form label.grey_txt a:hover {color:#b1b1b1; text-decoration:none;}
+
+#select_course .payment .option {width:650px; padding:0px 0 10px 5px; }
+#select_course .payment .option, #ie8#fix {width:650px; padding:0px 0 10px 5px;}
+#select_course .payment .option .foption {position:relative;width:298px;}
+#select_course .payment .option .optionlabel {position:relative;font:bold 17px/19px Arial, Helvetica, sans-serif; color:#3489b6; padding:13px 0px 5px 10px;width:290px;}
+#select_course .payment .option .optionsublabel {position:relative;font:bold 12px/14px Arial, Helvetica, sans-serif;font-style:italic; color:#b1b1b1; padding:0px 0px 10px 10px;width:290px;}
+#select_course .payment .option .foption select {font:13px Arial, Helvetica, sans-serif; color:#3489b6; width:280px; border:1px solid #aacfe4;}
+#select_course .payment .option .foption select option {padding-left:7px;}
+#select_course .payment .option .foption checkbox {width:25px; height:25px; border:1px solid #aacfe4;}
+table.otheroptiontable td{font:16px Arial, Helvetica, sans-serif; color:#3489b6;padding:5px 0px 5px 5px;}
+.foption .toolTip {cursor:help; position:relative;}
+.foption .toolTip.zindex6 {z-index:6;}
+.foption .toolTip.zindex7 {z-index:7;}
+.foption .toolTip.zindex8 {z-index:8;}
+.foption .toolTip.zindex9 {z-index:9;}
+.foption .toolTip.zindex10 {z-index:10;}
+.foption .toolTip.zindex11 {z-index:11;}
+.foption a span.toolTip  {font:14px Arial, Helvetica, sans-serif;color:#3489b6; text-decoration:none;}
+.foption a:hover span.toolTip {font:14px Arial, Helvetica, sans-serif;color:#3489b6; text-decoration:none;}
+.foption a{font:14px Arial, Helvetica, sans-serif; color:#3489b6;text-decoration:none;}
+
+#select_course .payment #card_info, #select_course .payment .payment_summary{
+	float:left;
+	}
+
+#select_course .payment #card_info{width:410px;margin-right:25px;}
+#select_course .payment #card_info h3, #student_info .info #left_info h3{font:bold 15px Arial, Helvetica, sans-serif; color:#767676; border-bottom:1px solid #767676; margin-bottom:8px;}
+#select_course .payment #card_info .fcardinfo, #student_info .info #left_info .fcardinfo {padding-bottom:8px; *padding-bottom:6px;}
+#select_course .payment #card_info .fcardinfo .label, #student_info .info #left_info .fcardinfo .label{font:bold 13px Arial, Helvetica, sans-serif; color:#767676; text-align:right; width:163px;  /*width:163px;*/ float:left; padding-top:5px;}
+#select_course .payment #card_info .fcardinfo .label span, #student_info .info #left_info .fcardinfo .label span {font:12px Arial, Helvetica, sans-serif; /*font:11px AvenirHeavy;*/ color:#4a4a4a; text-align:right;}
+#select_course .payment #card_info .fcardinfo input, #student_info .info #left_info .fcardinfo input {font:13px Arial, Helvetica, sans-serif; color:#767676; width:206px; border:1px solid #bdbdbd; margin-left:12px; padding:3px 4px;margin-top:2px;}
+#select_course .payment #card_info .fcardinfo select {font:13px Arial, Helvetica, sans-serif; color:#767676; width:206px; border:1px solid #bdbdbd; margin-left:12px; padding:3px 4px;margin-top:2px;}
+#select_course .payment .faccept{margin:25px 0 0; *margin:40px 0 0;}
+#select_course .payment .faccept input{float:left; margin:2px 8px 0 0; *margin-top:-2px;}
+#select_course .payment .faccept .label{float:left; font:15px Arial, Helvetica, sans-serif; color:#3489b6;}
+#select_course .payment .faccept .label span a{font-size:11px; text-decoration:underline; color:#3489b6;}
+#select_course .payment .faccept .label span a:hover{text-decoration:none;}
+input.nextbtn{background:url(../images/buttons/next.gif) no-repeat top; height:46px; width:205px; cursor:pointer; border:none; margin-top:32px;}
+input.nextbtn:hover{background:url(../images/buttons/next.gif) no-repeat bottom;}
+#select_course .payment span.from_visa {font:italic 11px Arial, Helvetica, sans-serif; color:#3489b6; padding-left:3px;}
+
+#select_course .payment .payment_summary{width:220px;margin-top:33px;}
+#select_course .payment .payment_summary .top{background:url(../images/top_summary.jpg) no-repeat; color:#666666; font:bold 18px/45px Arial, Helvetica, sans-serif; text-align:center;}
+#select_course .payment .payment_summary .mid_bg{background:url(../images/mid_summary.jpg) repeat-y;}
+#select_course .payment .payment_summary .mid_bg .tbl_txt{font:bold 13px Arial, Helvetica, sans-serif; color:#666666;}
+#select_course .payment .payment_summary .mid_bg .tbl_txt td.pad.padt28, #select_course .payment .payment_summary .mid_bg .tbl_txt td.padl.padt28{padding-top:28px;}
+#select_course .payment .payment_summary .mid_bg .tbl_txt td.pad.padt15, #select_course .payment .payment_summary .mid_bg .tbl_txt td.padl.padt15{padding-top:15px;}
+#select_course .payment .payment_summary .mid_bg .tbl_txt td.pad{padding:8px 5px 8px 20px;}
+#select_course .payment .payment_summary .mid_bg .tbl_txt td.padl{padding:8px 23px 8px 0;}
+#select_course .payment .payment_summary .mid_bg .tbl_txt td.brdr{border-bottom:2px solid #aacfe4; padding-top:5px;}
+#select_course .payment .payment_summary .mid_bg .tbl_txt td.biggerfont{ font-size:14px; padding-top:5px;}
+#select_course .payment .payment_summary input{font:13px Arial, Helvetica, sans-serif; color:#767676; width:150px; border:1px solid #bdbdbd; margin-left:1px; padding:3px 4px;margin-top:2px;}
+#select_course .payment #money_order {width:410px; float:left; margin-right:25px;}
+#select_course .payment #money_order p {font:13px/18px Arial, Helvetica, sans-serif; /*font-size:12px*/ color:#666666;}
+#select_course .payment #money_order p.padt25{padding-top:28px;}
+#select_course .payment #money_order p.fc_bold{padding-top:30px; font-weight:bold; font-size:15px; line-height:20px;}
+
+/*---------------Student Info---------------------*/
+#student_info{padding:0 15px 0 16px;}
+#student_info h1{color:#3489b6; font:20px Arial, Helvetica, sans-serif; margin:0 0 20px 32px;}
+#student_info .info {background:url(../images/bg_blue_curve.jpg) no-repeat center top; padding:20px 28px 0 45px;}
+/*#student_info .info #left_info, #student_info .info #validation{float:left; width:638px; margin-right:25px;}*/
+#student_info .info #left_info, #student_info .info #validation{float:left; width:631px; margin-right:25px;}
+#student_info .info #left_info h2 {font:16px Arial, Helvetica, sans-serif; color:#4c9eca; margin:0 0 28px 15px;}
+#student_info .info #left_info .w410{width:410px; margin-left:15px;}
+#student_info .info #left_info .w410.padt25{padding-top:25px;}
+#student_info .info #left_info p{color:#7cb8d8; font:Bold 13px Arial, Helvetica, sans-serif; margin-left:175px;}
+#student_info .info #left_info p a{color:#7cb8d8; text-decoration:underline; font-weight:normal; font-size:12px;}
+#student_info .info #left_info p a:hover{text-decoration:none;}
+#student_info .info #left_info p.marl0 {margin-left:0; color:#4C9ECA;}
+#student_info .info #left_info p a.link{color:#4C9ECA; text-decoration:underline; font:Bold 13px Arial, Helvetica, sans-serif;}
+#student_info .info #left_info p a:hover.link{text-decoration:none;}
+
+#student_info .info #left_info .fcardinfo.last{padding-bottom:0;}
+#student_info .info #left_info .heading{background:#f0f6fc; width:534px; padding:0 0 5px 15px; margin:20px 0 25px; *margin:34px 0 25px; font:bold 17px/21px Arial, Helvetica, sans-serif; color:#3489b6;}
+input.nextbtn.marb{margin-bottom:40px;}
+/*---------------Thank You---------------------*/
+#student_info .info #left_info, #student_info .info #thankyou{float:left; width:631px; margin-right:25px;}
+#student_info .info #thankyou p{font:16px/18px Arial, Helvetica, sans-serif; color:#3b84ad; padding-bottom:15px;} 
+table.thankyoutab td{font:16px Arial, Helvetica, sans-serif; color:#3489b6;padding-left:5px;}
+
+
+/*---------------Validation Questions---------------------*/
+#student_info .info #validation p{font:14px/16px Arial, Helvetica, sans-serif; color:#3b84ad; padding-bottom:45px;} 
+#student_info .info #validation h2 {font:20px Arial, Helvetica, sans-serif; color:#3b84ad; margin:0 150px 15px 0; border-bottom:1px solid #cccccc;}
+#student_info .info #validation .fquestion{padding-bottom:20px;} 
+#student_info .info #validation .fquestion label{font:bold 13px Arial, Helvetica, sans-serif; color:#767676; text-align:right; width:225px; float:left; padding-top:4px; *padding-top:0;}
+#student_info .info #validation .fquestion select {font:13px Arial, Helvetica, sans-serif; color:#9db1bf; width:355px; border:1px solid #bdbdbd; margin-left:12px; padding:3px 4px;}
+#student_info .info #validation .fquestion select option{padding-left:8px;}
+
+/*---------------Facebook Like---------------------*/
+#student_info .fb{padding:20px 0 0 32px; background:url(../images/bg_blue_curve.jpg) no-repeat center top;}
+#student_info .fb .fb_content{width:665px; float:left; margin:50px 15px 0 0; }
+#student_info .fb .fb_content .congrates{width:345px; float:left; margin-right:15px;}
+#student_info .fb .fb_content .congrates .top{height:6px;}
+#student_info .fb .fb_content .congrates .btm{height:10px;}
+#student_info .fb .fb_content .congrates .mid_bg {background:url(../images/mid_fb.gif) repeat-y; width:310px; padding:0 20px 50px 20px;}
+#student_info .fb .fb_content .congrates .mid_bg, #ie8#fix {background:url(../images/mid_fb.gif) repeat-y; width:310px; padding:0 20px 30px 20px; *padding:0 20px 50px 20px;}
+#student_info .fb .fb_content .congrates .align_center{text-align:center;}
+#student_info .fb .fb_content .congrates .mid_bg h2 {font:26px Arial, Helvetica, sans-serif; color:#3489b6;}
+#student_info .fb .fb_content .congrates .mid_bg h3 {font:18px Arial, Helvetica, sans-serif; color:#3489b6; margin:20px 0 19px; /*margin:55px 0 30px;*/}
+#student_info .fb .fb_content .congrates .mid_bg p {font:14px/16px Arial, Helvetica, sans-serif; color:#3489b6; padding:3px 0 20px;}
+#student_info .fb .fb_content .congrates .mid_bg ul.marl30{margin-left:30px;}
+#student_info .fb .fb_content .congrates .mid_bg ul li{background:url(../images/disc_grey.gif) no-repeat 2px 10px; padding-left:15px; font:13px/25px Arial, Helvetica, sans-serif; color:#666666;}
+#student_info .fb .fb_content .plugin{width:295px; float:left;}
+
+/*---------------Course Status Page---------------------*/
+#course_status {padding:0 15px 0 16px;}
+#course_status h1{color:#3489b6; font:19px Arial, Helvetica, sans-serif; text-align:center; margin-bottom:18px;}
+#course_status .border_blue {background:url(../images/bg_blue_curve.jpg) no-repeat center top; padding:15px 28px 0 45px;}
+#course_status .border_blue h2 {font:17px Arial, Helvetica, sans-serif; text-align:center; color:#3489b6; margin-bottom:20px;}
+
+
+#course_status .border_blue .bg_blue1,#course_status .border_blue .bg_blue2 , #course_status .border_blue .bg_pdf{float:left;}
+
+#course_status .border_blue .bg_blue1 {background:#a1c7eb; width:250px; margin-left:94px; padding:2px;}
+#course_status .border_blue .bg_blue1 .heading {border-top:2px solid #3489b6; border-left:2px solid #3489b6; border-right:2px solid #3489b6; margin-left:0px; position: relative; background:#f0eeef; color:#387893; font-size:16px; font-weight:bold; padding:12px 12px; }
+#course_status .border_blue .bg_blue1 .payment {border-bottom:2px solid #3489b6; border-left:2px solid #3489b6; border-right:2px solid #3489b6; padding:12px 12px; background:#fff; margin-top:0px; *margin-top:29px;}
+#course_status .border_blue .bg_blue1 .payment.marb{margin-bottom:0px;}
+#course_status .border_blue .bg_blue1 .payment.mart{margin-top:0px;}
+#course_status .border_blue .bg_blue1 .payment p {font:14px/22px Arial, Helvetica, sans-serif; color:#78abda;}
+
+#course_status .border_blue .bg_blue1 .payment p input.paynowbtn{width:104px; height:26px; background:url(../images/summaryPageImages/paynow-btn.png) no-repeat top; cursor:pointer; border:none; margin-left:10px; vertical-align:middle; *margin-top:4px;}
+#course_status .border_blue .bg_blue1 .payment p input.paynowbtn:hover{background:url(../images/summaryPageImages/paynow-btn.png) no-repeat bottom;}
+
+#course_status .border_blue .bg_blue1 .payment p input.needhelpbtn{width:104px; height:26px; background:url(../images/summaryPageImages/support-btn.png) no-repeat top; cursor:pointer; border:none; margin-left:10px; vertical-align:middle; *margin-top:4px;}
+#course_status .border_blue .bg_blue1 .payment p input.needhelpbtn:hover{background:url(../images/summaryPageImages/support-btn.png) no-repeat bottom;}
+
+#course_status .border_blue .bg_blue1 .payment p input.upgradebtn{width:79px; height:18px; background:url(../images/buttons/upgrade.gif) no-repeat top; cursor:pointer; border:none; margin-left:10px; vertical-align:middle; *margin-top:5px;}
+#course_status .border_blue .bg_blue1 .payment p input.upgradebtn:hover{background:url(../images/buttons/upgrade.gif) no-repeat bottom;}
+#course_status .border_blue .bg_blue1 .payment .txt{font:13px/18px Arial, Helvetica, sans-serif; color:#78abda;}
+#course_status .border_blue .bg_blue1 .payment .txt a{color:#666666; text-decoration:none;}
+#course_status .border_blue .bg_blue1 .payment .txt a:hover{text-decoration:underline;}
+#course_status .border_blue .bg_blue1 .payment td{padding-right:5px;}
+
+
+
+#course_status .border_blue .bg_blue2 {background:#a1c7eb; width:432px; margin:0 0 20px 15px; padding:2px;}
+#course_status .border_blue .bg_blue2 .heading {border-top:2px solid #3489b6; border-left:2px solid #3489b6; border-right:2px solid #3489b6; margin-left:0px; position: relative; background:#f0eeef; color:#387893; font-size:16px; font-weight:bold; padding:12px 12px; }
+#course_status .border_blue .bg_blue2 .payment {border-bottom:2px solid #3489b6; border-left:2px solid #3489b6; border-right:2px solid #3489b6; padding:12px 12px; background:#fff; margin-top:0px; *margin-top:29px;}
+#course_status .border_blue .bg_blue2 .payment.marb{margin-bottom:20px;}
+#course_status .border_blue .bg_blue2 .payment.mart{margin-top:0px;}
+#course_status .border_blue .bg_blue2 .payment p {font:14px/22px Arial, Helvetica, sans-serif; color:#78abda;}
+#course_status .border_blue .bg_blue2 .payment p input.upgradebtn{width:79px; height:18px; background:url(../images/buttons/upgrade.gif) no-repeat top; cursor:pointer; border:none; margin-left:10px; vertical-align:middle; *margin-top:5px;}
+#course_status .border_blue .bg_blue2 .payment p input.upgradebtn:hover{background:url(../images/buttons/upgrade.gif) no-repeat bottom;}
+#course_status .border_blue .bg_blue2 .payment .txt{font:13px/18px Arial, Helvetica, sans-serif; color:#78abda;}
+#course_status .border_blue .bg_blue2 .payment .txt a{color:#666666; text-decoration:none;}
+#course_status .border_blue .bg_blue2 .payment .txt a:hover{text-decoration:underline;}
+#course_status .border_blue .bg_blue2 .payment td{padding-right:5px;}
+#course_status .border_blue .bg_blue2 .payment .txt input.editbtn{width:63px; height:26px; background:url(../images/summaryPageImages/edit-btn.png) no-repeat top; cursor:pointer; border:none; vertical-align:middle;}
+#course_status .border_blue .bg_blue2 .payment .txt input.editbtn:hover{background:url(../images/summaryPageImages/edit-btn.png) no-repeat bottom;}
+
+#course_status .border_blue .bg_pdf {background:#ffffff; width:700px; margin:0 0 20px 15px; padding:2px;align:left;}
+#course_status .border_blue .bg_pdf a{color:#666666; text-decoration:none;}
+#course_status .border_blue .bg_pdf a:hover{text-decoration:underline;}
+
+
+#course_status .border_blue .bg_blue {background:#a1c7eb; width:700px; margin:0 auto; padding: 2px; clear:both;}
+#course_status .border_blue .bg_blue .heading {margin-left:20px; position:absolute;}
+#course_status .border_blue .bg_blue .payment {border:2px solid #3489b6; padding:12px 45px; background:#fff; margin-top:14px; *margin-top:29px;}
+#course_status .border_blue .bg_blue .payment.marb{margin-bottom:20px;}
+#course_status .border_blue .bg_blue .payment.mart{margin-top:0px;}
+#course_status .border_blue .bg_blue .payment p {font:14px/22px Arial, Helvetica, sans-serif; color:#666666;}
+#course_status .border_blue .bg_blue .payment p input.upgradebtn{width:79px; height:18px; background:url(../images/buttons/upgrade.gif) no-repeat top; cursor:pointer; border:none; margin-left:10px; vertical-align:middle; *margin-top:5px;}
+#course_status .border_blue .bg_blue .payment p input.upgradebtn:hover{background:url(../images/buttons/upgrade.gif) no-repeat bottom;}
+#course_status .border_blue .bg_blue .payment .txt{font:13px/18px Arial, Helvetica, sans-serif; color:#666666;}
+#course_status .border_blue .bg_blue .payment .txt a{color:#666666; text-decoration:none;}
+#course_status .border_blue .bg_blue .payment .txt a:hover{text-decoration:underline;}
+#course_status .border_blue .bg_blue .payment td{padding-right:10px;}
+
+
+
+input.submitbtn{background:url(../images/buttons/submit.gif) no-repeat top; height:46px; width:204px; cursor:pointer; border:none; margin-top:32px;}
+input.submitbtn:hover{background:url(../images/buttons/submit.gif) no-repeat bottom;}
+
+input.updatebtn{background:url(../images/buttons/update.gif) no-repeat top; height:46px; width:204px; cursor:pointer; border:none; margin-top:32px;}
+input.updatebtn:hover{background:url(../images/buttons/update.gif) no-repeat bottom;}
+
+input.processbtn{background:url(../images/buttons/process_payment.gif) no-repeat top; height:46px; width:302px; cursor:pointer; border:none; margin-top:32px;}
+input.processbtn:hover{background:url(../images/buttons/process_payment.gif) no-repeat bottom;}
+
+
+/* Rajani */
+
+/* Register Payment */
+
+#select_course .payment #googlecheckoutopt {width:410px; float:left; margin:33px 25px 0 0;}
+
+/* Terms & Conditions Modal Popup */
+
+.terms-conditions {padding:0; margin:0; width:800px; }
+.terms-conditions .header {color:#4077ab; background-color:#deecf9; font:18px Arial, Helvetica, sans-serif; padding-left:22px;}
+.terms-conditions .content { overflow:auto; height:500px; padding:10px 20px 13px 20px; margin:1px 2px 1px 0;}
+.terms-conditions .content p { padding-bottom:12px; color:#666666; font:13px/16px Arial, Helvetica, sans-serif; }
+.terms-conditions .content p .subhead {font-weight:bold;}
+.terms-conditions .content ul { padding-bottom:12px; color:#666666; font:13px/16px Arial, Helvetica, sans-serif; }
+
+.terms-conditions .marr5 {margin-right:5px;}
+.terms-conditions .mart5 {margin-top:5px\9; margin-top:0;}
+
+
+/* Text Msg Disclaimer Modal Popup */
+
+.txtmsg-conditions {padding:0; margin:0; width:400px; }
+.txtmsg-conditions .header {color:#4077ab; background-color:#deecf9; font:18px Arial, Helvetica, sans-serif; padding-left:22px;}
+.txtmsg-conditions .content { overflow:auto; height:350px; padding:10px 20px 13px 20px; margin:1px 2px 1px 0;}
+.txtmsg-conditions .content p { padding-bottom:12px; color:#666666; font:13px/16px Arial, Helvetica, sans-serif; }
+.txtmsg-conditions .content p .subhead {font-weight:bold;}
+.txtmsg-conditions .content ul { padding-bottom:12px; color:#666666; font:13px/16px Arial, Helvetica, sans-serif; }
+
+.txtmsg-conditions .marr5 {margin-right:5px;}
+.txtmsg-conditions .mart5 {margin-top:5px\9; margin-top:0;}
+
+
+#select_course .payment #card_info .fcardinfo input, #student_info .info #left_info .fcardinfo select {font:13px Arial, Helvetica, sans-serif; color:#767676; width:216px; border:1px solid #bdbdbd; margin-left:12px; padding:3px 3px 4px 3px; margin-top:2px;}
+.examinstruction {padding:0 35px 20px 41px; margin:0; font:15px/16px Arial,Helvetica,sans-serif; color:#666666;}
+.howdidufind {float:left; margin:0 0 0 15px; width:212px;}
+.howdidufind .radio { padding:0; border:none !important; margin:2px 5px 5px 0 !important; float:left;}
+.howdidufind label {font:13px Arial, Helvetica, sans-serif; color:#767676; margin-left:10px; padding:0;margin-top:2px; border:none !important; margin:5px 0 0 0;}
+.howdidufind .radio input {font:13px Arial, Helvetica, sans-serif; color:#767676; margin-left:10px; padding:0;margin-top:2px; border:none; margin:5px 0 0 0;}
+#student_info .fb .fb_content .congrates .mid_bg ul.marl14{margin-left:14px;}
+
+#student_info .info #left_info .courseinfo { float:left;}
+#student_info .info #left_info .courseinfo .radio {font:13px Arial, Helvetica, sans-serif; color:#767676; margin-left:10px; padding:0; margin-top:2px; border:none; margin:5px 0 0 0;}
+#select_course .course_details .coursetext {font:14px/18px Arial, Helvetica, sans-serif; color:#666666; padding:0 10px 20px 10px;}
+
+#select_course .payment #mail_options{width:410px; margin-right:25px; margin-top:30px;}
+#select_course .payment #mail_options h3, #student_info .info #left_info h3{font:bold 15px Arial, Helvetica, sans-serif; color:#767676; border-bottom:1px solid #767676; margin-bottom:8px;}
+#select_course .payment #mail_options .fcardinfo, #student_info .info #left_info .fcardinfo {padding-bottom:8px; *padding-bottom:6px;}
+#select_course .payment #mail_options .fcardinfo .label, #student_info .info #left_info .fcardinfo .label{font:bold 13px Arial, Helvetica, sans-serif; color:#767676; text-align:right; width:163px;  /*width:163px;*/ float:left; padding-top:5px;}
+#select_course .payment #mail_options .fcardinfo .label span, #student_info .info #left_info .fcardinfo .label span {font:12px Arial, Helvetica, sans-serif; /*font:11px AvenirHeavy;*/ color:#4a4a4a; text-align:right;}
+#select_course .payment #mail_options .fcardinfo input, #student_info .info #left_info .fcardinfo input {font:13px Arial, Helvetica, sans-serif; color:#767676; width:206px; border:1px solid #bdbdbd; margin-left:12px; padding:3px 4px;margin-top:2px;}
+.textarea {font:13px Arial, Helvetica, sans-serif; resize:none; height:80px; color:#767676; width:206px; border:1px solid #bdbdbd; margin-left:12px; padding:3px 4px;margin-top:2px;}
+#leftpart .inner_content p span.blue {color:#4279ae; font-weight:bold;}
+
+#leftpart .inner_content #contact_options {width:410px; float:left; margin-right:25px; margin-top:30px;}
+#leftpart .inner_content #contact_options h3 {font:bold 15px Arial, Helvetica, sans-serif; color:#767676; border-bottom:1px solid #767676; margin-bottom:8px;}
+#leftpart .inner_content #contact_options .fcardinfo {padding-bottom:8px; *padding-bottom:6px;}
+#leftpart .inner_content #contact_options .fcardinfo .label {font:bold 13px Arial, Helvetica, sans-serif; color:#767676; text-align:right; width:163px; /*width:163px;*/ float:left; padding:0; *padding-top:5px; padding-top:5px \0/; }
+#leftpart .inner_content #contact_options .fcardinfo .label span, #student_info .info #left_info .fcardinfo .label span {font:12px Arial, Helvetica, sans-serif; /*font:11px AvenirHeavy;*/ color:#4a4a4a; text-align:right;}
+#leftpart .inner_content #contact_options .fcardinfo input {font:13px Arial, Helvetica, sans-serif; color:#767676; width:206px; border:1px solid #bdbdbd; margin-left:12px; padding:3px 4px;margin-top:2px;}
+#leftpart .inner_content #contact_options .fcardinfo select {font:13px Arial, Helvetica, sans-serif; color:#767676; width:216px; border:1px solid #bdbdbd; margin-left:12px; padding:3px 4px;margin-top:2px;}
+#leftpart .inner_content h2 {color:#4077ab; background:url(../images/howitwork_bottombg.gif) bottom no-repeat; text-align:center; font:bold 24px Arial, Helvetica, sans-serif; margin-top:30px; padding:0 0 15px 0; margin-bottom:20px;}
+
+#leftpart .inner_content .easy-steps { padding:0; margin:0;}
+#leftpart .inner_content .easy-steps .main_image { padding:0; float:left; width:198px;}
+#leftpart .inner_content .easy-steps .right_image{ padding:0; float:left; width:28px;}
+#leftpart .inner_content .easy-steps .courseright_image{ padding:0; float:left; width:27px;}
+#leftpart .inner_content .tabcontainer ul { margin:10px 0 0 0; padding:0;}
+#leftpart .inner_content .tabcontainer ul li { width:190px; list-style:none; float:left;}
+#leftpart .inner_content .tabcontainer ul li.register { width:190px; text-align:center; margin-right:30px;}
+#leftpart .inner_content .tabcontainer ul li.course { width:190px; text-align:center; margin-right:30px;}
+#leftpart .inner_content .tabcontainer ul li.exam { width:210px; text-align:center;}
+#leftpart .inner_content .tabcontainer ul li h3 { color:#4077ab; font:bold 24px Arial, Helvetica, sans-serif; margin:0 0 5px 0; }
+#leftpart .inner_content .tabcontainer ul li .register_top { background:url(../images/register_top.gif) top no-repeat; width:190px; height:8px;}
+#leftpart .inner_content .tabcontainer ul li .register_center { background:url(../images/register_center.gif) repeat-y; width:180px; padding:5px; font:bold 13px Arial, Helvetica, sans-serif; color:#4e4d4d; }
+#leftpart .inner_content .tabcontainer ul li .register_bottom { background:url(../images/register_bottom.gif) bottom no-repeat; width:190px; height:5px;}
+#leftpart .inner_content .tabcontainer ul li .exam_top { background:url(../images/exam_top.gif) top no-repeat; width:210px; height:8px;}
+#leftpart .inner_content .tabcontainer ul li .exam_center { background:url(../images/exam_center.gif) repeat-y; width:200px; padding:5px; font:bold 13px Arial, Helvetica, sans-serif; color:#4e4d4d; }
+#leftpart .inner_content .tabcontainer ul li .exam_bottom { background:url(../images/exam_bottom.gif) bottom no-repeat; width:210px; height:5px;}
+
+#leftpart .inner_content #contact_options .fcardinfo .label .imp_fields { font-size:11px; color:#e91614; font-family:Verdana, Geneva, sans-serif;}
+
+#leftpart .inner_content .startcourse { float:left; color:#4077ab; font:bold 24px Arial, Helvetica, sans-serif; margin:40px 0 0 49px; }
+#leftpart .inner_content input.start_course {background:url(../images/buttons/start_course.png) no-repeat top; float:right; margin:40px 40px 0px 0; height:53px; width:155px; display:block; border:none; cursor:pointer;}
+#leftpart .inner_content input.start_course:hover {background:url(../images/buttons/start_course.png) no-repeat bottom;}
+
+.marl170 { margin-left:170px;}
+.mart5 { margin-top:5px !important;}
+.mart20 { margin-top:20px !important;}
+.padt15 {padding-top:15px;}
+.whitebg { background-color:#fff;}
+.inner_container { background-color:#fff; padding-top:24px; *padding-top:12px; padding-bottom:12px; *margin:1px 0 0 0;}
+.index_container { background-color:#fff; padding-top:24px; *padding-top:25px; *margin:1px 0 0 0;}
+
+/*add by hiren ladva*/
+.close { padding:5px 0 0 0; color:#666666; text-align:center;}
+.close a { padding:0; text-decoration:underline; color:#666666;}
+.close a:hover { padding:0; text-decoration:none; color:#666666;}
+.close img{ padding:0 0 0 2px; color:#666666; text-align:center;}
+.font15{ font-size:15px !important;}
+.privet-policy-title{color: #767676;
+    font: bold 15px Arial, Helvetica, sans-serif;
+    margin-bottom: 5px;}
+.datefomat{ background:url(../images/date-down-up-arrow.jpg) no-repeat 73px 1px; width:15px; }
+.w70{ width:70px !important;}
+.padr15{ padding-right:15px !important;}
+.w30{ width:30px !important;}
+.w45{ width:45px !important;}
+.w60{ width:60px !important;}
+.w55{ width:55px !important;}
+.gender{ float:left;  padding-top:5px; padding-bottom:10px;}
+.gender-male{float:left;}
+.gender-male input{ width:10px !important; margin-right:5px !important; float:left; border:0 !important; vertical-align:middle; *margin-top:-1px !important;}
+.gender-male label{color: #767676 !important;
+    font: 13px Arial,Helvetica,sans-serif;
+    padding: 0 !important; margin:0 !important;}
+.gender-female{float:left;}
+.gender-female input{ width:10px !important; margin-right:5px !important; float:left; border:0 !important; vertical-align:middle; *margin-top:-1px !important;}
+.gender-female label{color: #767676 !important;
+    font: 13px Arial,Helvetica,sans-serif;
+    padding: 0 !important; margin:0 !important;}
+	.w39{ width:39px !important;}
+	.w884{ width:884px !important;}
+	.font-arial{ font-family:Arial, Helvetica, sans-serif !important;}
+	.print{ font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#918E8D;}
+	.print a{ text-decoration: underline; color:#918E8D;}
+	.print a:hover{ text-decoration:none;}
+	
+/*add by srikanth*/	
+#popup_container {font-family: Arial, sans-serif;font-size: 12px;width: 400px;background: #FFF;color: #000;border: solid 2px #1E7EB4;padding: 10px;margin: 0px auto;}
+#popup_title_container {background-color: #1E7EB4;padding: 0 0 0 16px;margin-bottom: 10px;height: 30px;}
+#popup_title {font-size: 14px;font-weight: bold;text-align: center;float: left;color: #ffffff;vertical-align: middle;margin: 5px 0 0 5px;height: 30px}
+#popup_content {padding: 0 1.75em 1em 1.75em;}
+#popup_title_icon {width: 24px;height: 24px;float: left;margin-top: 3px;}
+#popup_panel {text-align: center;margin: 1em 0 0 1em;}
+#popup_message {margin-left: -25px;text-align: left;}
+#popup_message li {list-style-image: none;padding-bottom: 8px;padding-left: 18px;list-style-type:disc;list-style-position:inside;}
+#popup_prompt {margin: .5em 0;}
+
+#course .content a.SmallButton {background: transparent url('/images/small_btn_rt.png') no-repeat scroll top right;color: #fff;display: block;float: left;font: bold 12px arial, sans-serif;height: 25px;margin-right: 6px !important;padding-right: 12px !important;text-decoration: none;}
+#course .content a.SmallButton span {background: transparent url('/images/small_btn_lft.png') no-repeat;display: block;line-height: 15px;padding: 5px 0 5px 12px;}
+#course .content a.SmallButton:active {background-position: bottom right;color: #fff;outline: none;}
+#course .content a.SmallButton:visited {color: #fff;}
+#course .content a.SmallButton:active span {background-position: bottom left;padding: 4px 0 6px 12px;font-weight: bold;}
+#course .content a.SmallButton:hover {text-decoration: underline;margin-right: 6px !important;padding-right: 12px !important;}
+
+a.SmButton {background: transparent url('/images/small_btn_rt.png') no-repeat scroll top right;color: #fff;display: block;float: left;font: bold 12px arial, sans-serif;height: 25px;margin-right: 6px !important;padding-right: 12px !important;text-decoration: none;}
+a.SmButton span {background: transparent url('/images/small_btn_lft.png') no-repeat;display: block;line-height: 15px;padding: 5px 0 5px 12px;}
+a.SmButton:active {background-position: bottom right;color: #fff;outline: none;}
+a.SmButton:visited {color: #fff;}
+a.SmButton:active span {background-position: bottom left;padding: 4px 0 6px 12px;font-weight: bold;}
+a.SmButton:hover {text-decoration: underline;margin-right: 6px !important;padding-right: 12px !important;}
+
+
+#leftpart .inner_content .inquiry_box{position:relative;margin-left:auto;margin-right:auto;margin-bottom:15px;width: 80%;border: solid 1px black;background-color:#E1E1E1; /*CCFF99*/}
+#leftpart .inner_content .inquiry_box h6{padding: 10px 0px 5px 10px;font-size:12px; }
+#leftpart .inner_content .inquiry_box input[type=text] {font-family: Arial, Helvetica, sans-serif;font-size: 12px;border: solid 1px #606060 ;margin-left:10px;width:250px;height:20px;}
+
+
+#select_courseregfailed {padding:20px 15px 0 28px; margin-top:43px; /*margin-top:67px;*/}
+.prereg .prereg_summary{width:220px;margin-top:33px;margin-left:auto;margin-right:auto;}
+.prereg .prereg_summary .top{background:url('/images/top_summary.jpg') no-repeat; color:#666666; font:bold 18px/45px Arial, Helvetica, sans-serif; text-align:center;}
+.prereg .prereg_summary .mid_bg{background:url('/images/mid_summary.jpg') repeat-y;margin-bottom:-8px;}
+.prereg .prereg_summary .mid_bg .tbl_txt{font:bold 13px Arial, Helvetica, sans-serif; color:#666666;}
+.prereg .prereg_summary .mid_bg .tbl_txt td.pad.padt28, #content1 .prereg .prereg_summary .mid_bg .tbl_txt td.padl.padt28{padding-top:5px;}
+.prereg .prereg_summary .mid_bg .tbl_txt td.pad.padt15, #content1 .prereg .prereg_summary .mid_bg .tbl_txt td.padl.padt15{padding-top:15px;}
+.prereg .prereg_summary .mid_bg .tbl_txt td.pad{padding:8px 5px 8px 20px;}
+.prereg .prereg_summary .mid_bg .tbl_txt td.padl{padding:8px 23px 8px 0;}
+.prereg .prereg_summary .mid_bg .tbl_txt td.brdr{border-bottom:2px solid #aacfe4; padding-top:5px;}
+.prereg .prereg_summary .mid_bg .tbl_txt td.biggerfont{ font-size:14px; padding-top:5px;}
+.prereg .prereg_summary input{font:13px Arial, Helvetica, sans-serif; color:#767676; width:150px; border:1px solid #bdbdbd; margin-left:1px; padding:3px 4px;margin-top:2px;}
+
+.foption .toolTip {cursor:help; position:relative;}
+.foption .toolTip.zindex6 {z-index:6;}
+.foption .toolTip.zindex7 {z-index:7;}
+.foption .toolTip.zindex8 {z-index:8;}
+.foption .toolTip.zindex9 {z-index:9;}
+.foption .toolTip.zindex10 {z-index:10;}
+.foption .toolTip.zindex11 {z-index:11;}
+.foption a span.toolTip  {font:14px Arial, Helvetica, sans-serif;color:#3489b6; text-decoration:none;}
+.foption a:hover span.toolTip {font:14px Arial, Helvetica, sans-serif;color:#3489b6; text-decoration:none;}
+.foption a{font:14px Arial, Helvetica, sans-serif; color:#3489b6;text-decoration:none;}
+
+/* Modal window for certificate tracking upgrade*/
+.upgradeoption {padding:0; margin:0; width:700px; height:600px;}
+.upgradeoption .header {color:#4077ab; background-color:#deecf9; font:18px Arial, Helvetica, sans-serif; padding-left:22px;}
+.upgradeoption .content { overflow:auto; height:550px; padding:10px 20px 13px 20px; margin:1px 2px 1px 0;}
+.upgradeoption p { padding-bottom:12px; color:#767676; font:13px/16px Arial, Helvetica, sans-serif; }
+.upgradeoption .content p .subhead {font-weight:bold;}
+.upgradeoption .marr5 {margin-right:5px;}
+.upgradeoption .mart5 {margin-top:5px\9; margin-top:0;}
+.upgradeoption ul{margin-left:30px;}
+.upgradeoption li {padding-left:10px;color:#767676; font:12px/14px Arial, Helvetica, sans-serif;list-style-type:decimal;}
+.floatl{float:left;}
+.floatr{float:right;}
+.upgradepaymentstatus {padding:0; margin:0; width:500px; height:200px;}
+.upgradepaymentstatus .header {color:#4077ab; background-color:#deecf9; font:18px Arial, Helvetica, sans-serif; padding-left:22px;}
+.upgradepaymentstatus .content { overflow:auto; height:200px; padding:10px 20px 13px 20px; margin:1px 2px 1px 0;}
+.upgradepaymentstatus p { padding-bottom:12px; color:#767676; font:13px/16px Arial, Helvetica, sans-serif; }
+.upgradepaymentstatus .content p .subhead {font-weight:bold;}
+.upgradepaymentstatus .marr5 {margin-right:5px;}
+.upgradepaymentstatus .mart5 {margin-top:5px\9; margin-top:0;}
+.upgradepaymentstatus ul{margin-left:30px;}
+.upgradepaymentstatus li {padding-left:10px;color:#767676; font:12px/14px Arial, Helvetica, sans-serif;list-style-type:decimal;}
+
+
+/*Rabindra Negi
+
+#nav_state {margin-top:-2px; *margin-top:-2px; float:left; }
+
+#nav_state li {float:left; margin-right:15px; height:20px; *height:20x; height:20px\9; }
+
+#nav_state li.navhome a		  { width:80px; display:block; text-decoration:none; cursor:pointer; color:#fff; text-align:center; padding:2px 0 0 0; *padding:6px 0 0 0; padding:6px 0 0 0\9; font:14px HelveticaWorldBold, Arial, Verdana, sans-serif;}
+#nav_state li.navhome a.active, #nav_state li.navhome a:hover {color:#062842;}
+
+#nav_state li.navabout a	  { width:103px; display:block; text-decoration:none; cursor:pointer; color:#fff; text-align:center; padding:2px 0 0 0; *padding:6px 0 0 0; padding:6px 0 0 0\9; font:14px HelveticaWorldBold, Arial, Verdana, sans-serif;}
+#nav_state li.navabout a.active, #nav_state li.navabout a:hover {color:#062842;}
+
+#nav_state li.navhow a		  {width:127px; display:block; text-decoration:none; cursor:pointer; color:#fff; text-align:center; padding:2px 0 0 0; *padding:6px 0 0 0; padding:6px 0 0 0\9; font:14px HelveticaWorldBold, Arial, Verdana, sans-serif;}
+#nav_state li.navhow a.active, #nav_state li.navhow a:hover {color:#062842;}
+
+#nav_state li.nav247support a {width:127px; display:block; text-decoration:none; cursor:pointer; color:#fff; text-align:center; padding:2px 0 0 0; *padding:6px 0 0 0; padding:6px 0 0 0\9; font:14px HelveticaWorldBold, Arial, Verdana, sans-serif;}
+#nav_state li.nav247support a.active, #nav_state li.nav247support a:hover {color:#062842;}
+
+#nav_state li.navhelpfaq {margin-right:44px;}
+#nav_state li.navhelpfaq a	  { width:111px; display:block; text-decoration:none; cursor:pointer; color:#fff; text-align:center; padding:2px 0 0 0; *padding:6px 0 0 0; padding:6px 0 0 0\9; font:14px HelveticaWorldBold, Arial, Verdana, sans-serif;}
+#nav_state li.navhelpfaq a.active, #nav_state li.navhelpfaq a:hover {color:#062842;}
+
+.student-login-menu{float:right; background:url(../images/student-login-slice.jpg) repeat-x; height:32px; width:150px; text-align:center; font:14px HelveticaWorldBold,Arial,Verdana,sans-serif;}
+.student-login-menu a{ color:#fff !important; text-decoration:none; cursor:pointer;}
+.student-login-menu a:hover{ color:#370206 !important; text-decoration:none;}
+
+#schoolName{width:552px !important; text-align:left !important; max-height:68px !important;}
+#schoolName b{ display:block !important;}*/
+
+#google_translate_element{ text-align:right !important;}
+
+.goog-te-banner-frame.skiptranslate { display: none !important; } 
+body { top: 0px !important; }
+.goog-tooltip { display: none !important;}
+.goog-tooltip:hover { display: none !important; }
+.goog-text-highlight { background-color: transparent !important; border: none !important; box-shadow: none !important; }
+
+/* Header */
+
+#branding_new {
+	position: relative;
+	width:1000px;
+	font-family: Century Gothic, Apple Gothic, sans-serif;
+  	z-index: 9999;
+}
+.main-div {width:997px; height:124px border:0px; overflow:hidden; background:#fff; }
+.main-div .innertop-div {float:left; margin-bottom:5px;}
+.main-div .innertop-div .logo {float:left; width:85px; height:81px; padding-top:10px; margin-left:15px;}
+.main-div .innertop-div #schoolName {font:30px Century Gothic, Apple Gothic, sans-serif; float:left; width:550px; padding:32px 0 0 0; color:#3F76AA; line-height:20px; font-weight:bold;}
+.main-div .innertop-div #schoolName b{line-height:34px !important;}
+.main-div .innertop-div .topright {float:right; width:325px;}
+.main-div .innertop-div .topright .go-state {float:right; padding:12px 5px 2px 0; }
+.main-div .innertop-div .topright .go-state select{font-size:13px !important;}
+.main-div .innertop-div .topright .social-icons {float:right; }
+.main-div .top-menu-bg{ background:url(/images/nav-bar-slice.jpg) repeat-x; width:1000px; height:32px; float:left;}
+
+#nav_state {margin-top:-1px; *margin-top:-2px; float:left; /*padding-bottom:24px;*margin-bottom:25px; margin-top:-1px; *margin-top:-1px;*/ }
+#nav_state li {float:left; margin:0 -31px 0 68px; height:20px; *height:20x; height:20px\9; } /*margin-right:51px;*/
+#nav_state li.navhome a		  { width:80px; display:block; text-decoration:none; cursor:pointer; color:#000; text-align:center; padding:2px 0 0 0; *padding:6px 0 0 0; padding:6px 0 0 0\9; font:14px HelveticaWorldBold, Arial, Verdana, sans-serif;}
+#nav_state li.navabout a	  { width:103px; display:block; text-decoration:none; cursor:pointer; color:#000; text-align:center; padding:2px 0 0 0; *padding:6px 0 0 0; padding:6px 0 0 0\9; font:14px HelveticaWorldBold, Arial, Verdana, sans-serif;}
+#nav_state li.navhow a		  {width:127px; display:block; text-decoration:none; cursor:pointer; color:#000; text-align:center; padding:2px 0 0 0; *padding:6px 0 0 0; padding:6px 0 0 0\9; font:14px HelveticaWorldBold, Arial, Verdana, sans-serif;}
+#nav_state li.nav247support a {width:127px; display:block; text-decoration:none; cursor:pointer; color:#000; text-align:center; padding:2px 0 0 0; *padding:6px 0 0 0; padding:6px 0 0 0\9; font:14px HelveticaWorldBold, Arial, Verdana, sans-serif;}
+#nav_state li.navstudentlogin a {width:127px; display:block; text-decoration:none; cursor:pointer; color:#000; text-align:center; padding:2px 0 0 0; *padding:6px 0 0 0; padding:6px 0 0 0\9; font:14px HelveticaWorldBold, Arial, Verdana, sans-serif;}
+#nav_state li.navhelpfaq {margin-right:44px;}
+#nav_state li.navhelpfaq a	  { width:111px; display:block; text-decoration:none; cursor:pointer; color:#000; text-align:center; padding:2px 0 0 0; *padding:6px 0 0 0; padding:6px 0 0 0\9; font:14px HelveticaWorldBold, Arial, Verdana, sans-serif;}
+
