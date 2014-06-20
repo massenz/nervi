@@ -15,10 +15,12 @@
 # Standard imports
 import argparse
 import json
+import os
 import time
 import logging
 
 # Flask imports
+import uuid
 from flask import (
     Flask,
     make_response,
@@ -32,32 +34,27 @@ from flask.ext.login import login_required
 from flask.ext.mongoengine import MongoEngine
 from flask.ext.security import MongoEngineUserDatastore, Security, UserMixin, RoleMixin
 
-# Third-party
-import flask_security
-import launchkey
-
 
 # Constants for program execution - non-configurable
 FORMAT = '%(asctime)-15s [%(levelname)s] %(message)s'
 DATE_FMT = '%m/%d/%Y %H:%M:%S'
 
 #: Flask App, must be global
-app = Flask(__name__)
+application = Flask(__name__)
 
 # TODO: read from config.yaml instead
-# secret_key = "r10gohrohsd9o5v5p6vdc4vm9x7rvbek"
 MAX_RETRIES = 30
 RETRY_INTERVAL = 1
 
 # TODO: Move to a configuration method, values retrieved from config.yaml and parse_args()
-app.config['DEBUG'] = False
-app.config['SECRET_KEY'] = 'secret'
-app.config['MONGODB_DB'] = 'flask-security'
-app.config['MONGODB_HOST'] = 'localhost'
-app.config['MONGODB_PORT'] = 27017
+application.config['DEBUG'] = False
+application.config['SECRET_KEY'] = 'secret'
+application.config['MONGODB_DB'] = 'logs-server'
+application.config['MONGODB_HOST'] = 'localhost'
+application.config['MONGODB_PORT'] = 27017
 
 #: Database connection object
-db = MongoEngine(app)
+db = MongoEngine(application)
 
 
 # TODO: refactor into their own 'model' module
@@ -78,7 +75,7 @@ user_datastore = MongoEngineUserDatastore(db, User, Role)
 
 
 # Create a user to test with
-@app.before_first_request
+@application.before_first_request
 def create_user():
     user_datastore.find_or_create_role('admin')
     user_datastore.find_or_create_role('user')
@@ -108,31 +105,73 @@ class NotAuthorized(Exception):
         return rv
 
 
+class UuidNotValid(Exception):
+    status_code = 406
+
+    def __init__(self, message, status_code=None, payload=None):
+        Exception.__init__(self)
+        self.message = message
+        if status_code is not None:
+            self.status_code = status_code
+        self.payload = payload
+
+    def to_dict(self):
+        rv = dict(self.payload or ())
+        rv['message'] = self.message
+        return rv
+
+
 def parse_args():
     """ Parse command line arguments and returns a configuration object
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument('-f', '--key-file', required=True,
-                        help="The file containing the Private Key")
     parser.add_argument('-p', '--port', help="The port for the server to listen on",
                         default=5050)
     parser.add_argument('-v', '--verbose', action='store_true', help='Enables debug logging')
     parser.add_argument('--debug', action='store_true', help="Turns on debugging/testing mode and "
                                                              "disables authentication")
+    parser.add_argument('--work-dir', help="Where to store files, must be an absolute path",
+                        default='/var/lib/migration-logs')
     return parser.parse_args()
+
+def get_workdir():
+    workdir = application.config['WORKDIR']
+    if not os.path.isabs(workdir):
+        raise ValueError('{0} not an absolute path'.format(workdir))
+    return workdir
 
 
 # Views
-@app.route('/')
-@login_required
+@application.route('/')
 def home():
     user_id = 'unknown'
     if 'user_id' in request.args:
         user_id = request.args['user_id']
-    return render_template('index.html', user_id=user_id)
+    return render_template('index.html', user_id=user_id, workdir=get_workdir())
 
+@application.route('/api/v1/<migration_id>', methods=['POST'])
+def upload_data(migration_id):
+    try:
+        as_uuid = uuid.UUID(migration_id)
+    except ValueError:
+        raise UuidNotValid("Could not convert {0} to a valid UUID".format(migration_id))
+    logging.info('Uploading binary data for {0}'.format(as_uuid))
+    print '>>>>', request.data
+    # TODO: use a query arg for the file name extension, or even the full name
+    fname = os.path.join(get_workdir(), migration_id)
+    os.mkdir(fname)
+    fname = os.path.join(fname, 'migration_logs.zip')
+    with open(fname, 'w') as file_out:
+        file_out.write(request.data)
+    resp_data = {
+        'filename': fname,
+        'saved': True,
+        'file_size': os.path.getsize(fname)
+    }
+    logging.info('File {filename} saved, size {file_size} bytes'.format(**resp_data))
+    return make_response(jsonify(resp_data))
 
-@app.errorhandler(NotAuthorized)
+@application.errorhandler(NotAuthorized)
 def handle_invalid_usage(error):
     logging.error(error.message)
     response = jsonify(error.to_dict())
@@ -148,10 +187,11 @@ def run_server():
     if config.debug:
         logging.warn("Running in TESTING mode: this disables security checks, DO NOT use in "
                      "Production")
-        app.config['DEBUG'] = True
-        app.config['TESTING'] = True
-    security = Security(app, user_datastore)
-    app.run(port=config.port, debug=config.verbose)
+        application.config['DEBUG'] = True
+        application.config['TESTING'] = True
+    application.config['WORKDIR'] = config.work_dir
+    security = Security(application, user_datastore)
+    application.run(port=int(config.port), debug=config.verbose)
 
 
 if __name__ == '__main__':

@@ -2,7 +2,8 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
+    <link rel="stylesheet" type="text/css" href="../static/stylesheet.css">
+    <title>Binary Logs File uploads</title>
 </head>
 <body>
     <p>
@@ -11,7 +12,8 @@
     </p>
     <p>You have logged in as: &nbsp;<strong>{{  user_id }}</strong>&nbsp;</p>
     <p>
-        Click <a href="/static/all_contents.html">here</a> to access all content.
+        Use <pre>POST /api/v1/logs/{UUID}</pre> to upload binary data.<br>
+        This will be saved in the <pre>{{ workdir }}</pre> folder on this server.
     </p>
 </body>
 </html>
