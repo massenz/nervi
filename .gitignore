@@ -22,3 +22,4 @@ dist/
 requirements.txt.freeze
 src/sentinel.egg-info/
 
+.elasticbeanstalk/
