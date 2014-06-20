@@ -30,7 +30,6 @@ from flask import (
     request,
     url_for)
 
-from flask.ext.login import login_required
 from flask.ext.mongoengine import MongoEngine
 from flask.ext.security import MongoEngineUserDatastore, Security, UserMixin, RoleMixin
 
