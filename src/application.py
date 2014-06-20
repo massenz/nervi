@@ -141,17 +141,17 @@ def handle_invalid_usage(error):
 
 def run_server():
     # TODO: replace with OS Env variable (for AWS Beanstalk)
-    config = parse_args()
-    loglevel = logging.DEBUG if config.verbose else logging.INFO
+    # config = parse_args()
+    loglevel = logging.DEBUG
     logging.basicConfig(format=FORMAT, datefmt=DATE_FMT, level=loglevel)
     # Initialize the private key global
-    if config.debug:
-        logging.warn("Running in TESTING mode: this disables security checks, DO NOT use in "
-                     "Production")
-        application.config['DEBUG'] = True
-        application.config['TESTING'] = True
-    application.config['WORKDIR'] = config.work_dir
-    application.run(port=int(config.port), debug=config.verbose)
+    logging.warn("Running in TESTING mode: this disables security checks, DO NOT use in "
+                 "Production")
+    application.config['DEBUG'] = True
+    application.config['TESTING'] = True
+    # TODO: read OS Env variable instead
+    application.config['WORKDIR'] = '/tmp'
+    application.run(host='0.0.0.0', debug=True)
 
 
 if __name__ == '__main__':
