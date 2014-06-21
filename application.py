@@ -73,7 +73,7 @@ class UuidNotValid(ResponseError):
 
 def get_workdir():
     workdir = application.config['WORKDIR']
-    if not os.path.isabs(workdir):
+    if not workdir or not os.path.isabs(workdir):
         return 'Not an abs path: ' + workdir
         # raise ValueError('{0} not an absolute path'.format(workdir))
     return workdir
