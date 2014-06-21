@@ -132,7 +132,7 @@ def upload_data(migration_id):
     file_type = request.args.get('type', 'zip')
     fname = build_fname(migration_id, ext=file_type)
     if not os.path.exists(os.path.dirname(fname)):
-        os.mkdir(os.path.dirname(fname))
+        os.makedirs(os.path.dirname(fname), 2775)
     with open(fname, 'w') as file_out:
         file_out.write(request.data)
     resp_data = {
