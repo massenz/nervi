@@ -37,7 +37,7 @@ DATE_FMT = '%m/%d/%Y %H:%M:%S'
 #: Flask App, must be global
 application = Flask(__name__)
 
-# TODO: this is a dirty hack to get round a seeming limitation in beanstalk - TBC
+#: When deployed on Beanstalk, ``application.config`` seems to be unavailable; using this instead
 app_config = {}
 
 # TODO: read from config.yaml instead
@@ -100,12 +100,20 @@ def home():
 
 @application.route('/healthz')
 def health():
+    """ A simple health-chek endpoint (can be used as a heartbeat too).
+
+    :return: a 200 OK status (and the string "ok")
+    """
     return 'ok'
 
 
 @application.route('/configz')
-def config():
-    configz = {'health': 'ok'}
+def get_configs():
+    """ Configuration values
+
+    :return: a JSON response with the currently configured application values
+    """
+    configz = {'health': health()}
     for key in CONFIG_VARZ:
         varz = application.config.get(key) or app_config.get(key)
         if varz:
@@ -136,7 +144,7 @@ def upload_data(migration_id):
     return make_response(jsonify(resp_data))
 
 
-@application.errorhandler(NotAuthorized)
+@application.errorhandler(ResponseError)
 def handle_invalid_usage(error):
     logging.error(error.message)
     response = jsonify(error.to_dict())
@@ -150,18 +158,48 @@ def config_app():
     prepare_env()
 
 
-def prepare_env():
-    application.config['DEBUG'] = os.getenv('FLASK_DEBUG', True)
-    application.config['TESTING'] = os.getenv('FLASK_TESTING', True)
-    app_config['WORKDIR'] = os.getenv('FLASK_WORKDIR', '/tmp')
-    app_config['RUNNING_AS'] = os.getenv('USER', '')
+def prepare_env(config=None):
+    """ Initializes the application configuration
+
+    Must take into account that it may be started locally (via a command-line options) or
+    remotely via AWS Beanstalk (in which case only the OS Env variables will be available).
+
+    :param config: an optional L{Namespace} object, obtained from parsing the options
+    :type config: argparse.Namespace or None
+    """
+    if not app_config.get('INITIALIZED'):
+        application.config['DEBUG'] = os.getenv('FLASK_DEBUG', True) if not config else config.debug
+        application.config['TESTING'] = os.getenv('FLASK_TESTING', True)
+        app_config['WORKDIR'] = os.getenv('FLASK_WORKDIR', '/tmp') if not config else config.work_dir
+        app_config['RUNNING_AS'] = os.getenv('USER', '')
+        app_config['INITIALIZED'] = True
+
+
+def parse_args():
+    """ Parse command line arguments and returns a configuration object
+    """
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-p', '--port', help="The port for the server to listen on", type=int,
+                        default=5050)
+    parser.add_argument('-v', '--verbose', action='store_true', help='Enables debug logging')
+    parser.add_argument('--debug', action='store_true', help="Turns on debugging/testing mode and "
+                                                             "disables authentication")
+    parser.add_argument('--work-dir', help="Where to store files, must be an absolute path",
+                        default='/var/lib/migration-logs')
+    return parser.parse_args()
 
 
 def run_server():
-    loglevel = logging.DEBUG
+    """ Starts the server, after configuring some application values.
+        This is **not** executed by the Beanstalk framework
+
+    :return:
+    """
+    config = parse_args()
+    loglevel = logging.DEBUG if config.verbose else logging.INFO
     logging.basicConfig(format=FORMAT, datefmt=DATE_FMT, level=loglevel)
-    prepare_env()
-    application.run(host='0.0.0.0')
+    prepare_env(config)
+    application.run(host='0.0.0.0', debug=config.debug, port=config.port)
 
 
 if __name__ == '__main__':
