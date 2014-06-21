@@ -144,6 +144,12 @@ def handle_invalid_usage(error):
     return response
 
 
+@application.before_first_request
+def config_app():
+    logging.basicConfig(format=FORMAT, datefmt=DATE_FMT, level=logging.DEBUG)
+    prepare_env()
+
+
 def prepare_env():
     application.config['DEBUG'] = os.getenv('FLASK_DEBUG', True)
     application.config['TESTING'] = os.getenv('FLASK_TESTING', True)
