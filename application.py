@@ -76,6 +76,10 @@ class UuidNotValid(ResponseError):
     status_code = 406
 
 
+class FileNotFound(ResponseError):
+    status_code = 404
+
+
 def get_workdir():
     workdir = app_config.get('WORKDIR')
     if not workdir or not os.path.isabs(workdir):
@@ -91,6 +95,23 @@ def build_fname(migration_id, ext):
     return os.path.join(workdir, migration_id, '{prefix}_{name}.{ext}'.format(
         prefix=prefix, name=DEFAULT_NAME, ext=ext))
 
+
+def find_most_recent(migration_id, ext):
+    """ Returns the most recent file matching the given extension, for the Migration ID
+
+    :param migration_id: the unique ID of the migration for the logs
+    :param ext: the file extension
+    :return: the most recent filename that matches the ID and extension
+    :raises: FileNotFound if the file does not exist
+    """
+    workdir = os.path.join(get_workdir(), migration_id)
+    files = [f for f in os.listdir(workdir) if os.path.isfile(os.path.join(workdir, f))]
+    files.sort(reverse=True)
+    for fname in files:
+        # TODO: should match the pattern, beyond the simple extension matching
+        if fname.endswith('.{ext}'.format(ext=ext)):
+            return os.path.join(workdir, fname)
+    raise FileNotFound("Could not find logs for {id}".format(id=migration_id))
 
 # Views
 @application.route('/')
@@ -121,14 +142,47 @@ def get_configs():
     return make_response(jsonify(configz))
 
 
+def get_file(fname):
+    if not os.path.exists(fname):
+        raise FileNotFound("Could not find log files for {name}".format(name=fname))
+    with open(fname, 'r') as logs_data:
+        return logs_data.read()
+
+
+@application.route('/api/v1/<migration_id>', methods=['GET', 'HEAD'])
+def download_data(migration_id):
+    """ Retrieves the log files for a Migration
+
+        If there are more than one set of log files with the given extension for the same ID,
+        it will return the most recent.
+
+    :param migration_id: the unique ID for the migration logs we want to retrieve
+    :type migration_id: ```uuid.UUID```
+    :return: a response that will direct the client to download the file (instead of displaying
+        it in the browser), by using the "Content-Disposition" header
+    """
+    try:
+        as_uuid = uuid.UUID(migration_id)
+    except ValueError:
+        raise UuidNotValid("Could not convert {0} to a valid UUID".format(migration_id))
+    logging.info('Downloading logs data for {0}'.format(as_uuid))
+    # TODO: use a query arg for the file name extension, or even the full name
+    file_type = request.args.get('type', 'zip')
+    fname = find_most_recent(migration_id, ext=file_type)
+    response = make_response()
+    response.headers["Content-Disposition"] = "attachment; filename={name}".format(
+        name=os.path.basename(fname))
+    response.data = get_file(fname)
+    return response
+
+
 @application.route('/api/v1/<migration_id>', methods=['POST'])
 def upload_data(migration_id):
     try:
         as_uuid = uuid.UUID(migration_id)
     except ValueError:
         raise UuidNotValid("Could not convert {0} to a valid UUID".format(migration_id))
-    logging.info('Uploading binary data for {0}'.format(as_uuid))
-    # TODO: use a query arg for the file name extension, or even the full name
+    logging.info('Uploading compressed logs data for {0}'.format(as_uuid))
     file_type = request.args.get('type', 'zip')
     fname = build_fname(migration_id, ext=file_type)
     if not os.path.exists(os.path.dirname(fname)):
