@@ -142,7 +142,7 @@ def get_configs():
     return make_response(jsonify(configz))
 
 
-def get_file(fname):
+def get_data(fname):
     if not os.path.exists(fname):
         raise FileNotFound("Could not find log files for {name}".format(name=fname))
     with open(fname, 'r') as logs_data:
@@ -172,7 +172,7 @@ def download_data(migration_id):
     response = make_response()
     response.headers["Content-Disposition"] = "attachment; filename={name}".format(
         name=os.path.basename(fname))
-    response.data = get_file(fname)
+    response.data = get_data(fname)
     return response
 
 
@@ -186,7 +186,7 @@ def upload_data(migration_id):
     file_type = request.args.get('type', 'zip')
     fname = build_fname(migration_id, ext=file_type)
     if not os.path.exists(os.path.dirname(fname)):
-        os.makedirs(os.path.dirname(fname), 2775)
+        os.makedirs(os.path.dirname(fname), 777)
     with open(fname, 'w') as file_out:
         file_out.write(request.data)
     resp_data = {
