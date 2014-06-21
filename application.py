@@ -151,7 +151,7 @@ def prepare_env():
     app_config['RUNNING_AS'] = os.getenv('USER', '')
 
 
-def run_server():
+def main():
     loglevel = logging.DEBUG
     logging.basicConfig(format=FORMAT, datefmt=DATE_FMT, level=loglevel)
     prepare_env()
@@ -159,4 +159,4 @@ def run_server():
 
 
 if __name__ == '__main__':
-    run_server()
+    main()
