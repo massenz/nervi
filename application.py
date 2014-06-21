@@ -37,6 +37,9 @@ DATE_FMT = '%m/%d/%Y %H:%M:%S'
 #: Flask App, must be global
 application = Flask(__name__)
 
+# TODO: this is a dirty hack to get round a seeming limitation in beanstalk - TBC
+app_config = {}
+
 # TODO: read from config.yaml instead
 MAX_RETRIES = 30
 RETRY_INTERVAL = 1
@@ -45,7 +48,8 @@ DEFAULT_NAME = 'migration_logs'
 # TODO: Move to a configuration method, values retrieved from config.yaml and parse_args()
 application.config['SECRET_KEY'] = 'ur7b3xfapm'
 
-CONFIG_VARZ = ('DEBUG', 'TESTING', 'WORKDIR', 'SESSION_COOKIE_DOMAIN', 'SESSION_COOKIE_PATH')
+CONFIG_VARZ = ('DEBUG', 'TESTING', 'WORKDIR', 'SESSION_COOKIE_DOMAIN', 'SESSION_COOKIE_PATH',
+               'RUNNING_AS')
 
 
 class ResponseError(Exception):
@@ -73,11 +77,10 @@ class UuidNotValid(ResponseError):
 
 
 def get_workdir():
-    return application.config['WORKDIR']
-    # if not workdir or not os.path.isabs(workdir):
-    #     return 'Not an abs path: ' + workdir
-    #     # raise ValueError('{0} not an absolute path'.format(workdir))
-    # return workdir
+    workdir = app_config.get('WORKDIR')
+    if not workdir or not os.path.isabs(workdir):
+        raise ValueError('{0} not an absolute path'.format(workdir))
+    return workdir
 
 
 def build_fname(migration_id, ext):
@@ -104,7 +107,7 @@ def health():
 def config():
     configz = {'health': 'ok'}
     for key in CONFIG_VARZ:
-        varz = application.config.get(key)
+        varz = application.config.get(key) or app_config.get(key)
         if varz:
             configz[key.lower()] = str(varz)
     return make_response(jsonify(configz))
@@ -144,7 +147,8 @@ def handle_invalid_usage(error):
 def prepare_env():
     application.config['DEBUG'] = os.getenv('FLASK_DEBUG', True)
     application.config['TESTING'] = os.getenv('FLASK_TESTING', True)
-    application.config['WORKDIR'] = os.getenv('FLASK_WORKDIR', '/tmp')
+    app_config['WORKDIR'] = os.getenv('FLASK_WORKDIR', '/tmp')
+    app_config['RUNNING_AS'] = os.getenv('USER', '')
 
 
 def run_server():
