@@ -3,14 +3,13 @@
 <head lang="en">
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="../static/stylesheet.css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <title>Binary Logs File uploads</title>
 </head>
 <body>
     <p>
-        This is the main page, you are not supposed to be here
-        unless you have logged in.
+        This is the main page, mostly just used to test the app is running.
     </p>
-    <p>You have logged in as: &nbsp;<strong>{{  user_id }}</strong>&nbsp;</p>
     <p>
         Use <pre>POST /api/v1/logs/{UUID}</pre> to upload binary data.<br>
         This will be saved in the <pre>{{ workdir }}</pre> folder on this server.
