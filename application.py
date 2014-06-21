@@ -43,8 +43,9 @@ RETRY_INTERVAL = 1
 DEFAULT_NAME = 'migration_logs'
 
 # TODO: Move to a configuration method, values retrieved from config.yaml and parse_args()
-application.config['DEBUG'] = False
 application.config['SECRET_KEY'] = 'ur7b3xfapm'
+
+CONFIG_VARZ = ('DEBUG', 'TESTING', 'WORKDIR', 'SESSION_COOKIE_DOMAIN', 'SESSION_COOKIE_PATH')
 
 
 class ResponseError(Exception):
@@ -72,11 +73,11 @@ class UuidNotValid(ResponseError):
 
 
 def get_workdir():
-    workdir = application.config['WORKDIR']
-    if not workdir or not os.path.isabs(workdir):
-        return 'Not an abs path: ' + workdir
-        # raise ValueError('{0} not an absolute path'.format(workdir))
-    return workdir
+    return application.config['WORKDIR']
+    # if not workdir or not os.path.isabs(workdir):
+    #     return 'Not an abs path: ' + workdir
+    #     # raise ValueError('{0} not an absolute path'.format(workdir))
+    # return workdir
 
 
 def build_fname(migration_id, ext):
@@ -92,6 +93,22 @@ def build_fname(migration_id, ext):
 @application.route('/')
 def home():
     return render_template('index.html', workdir=get_workdir())
+
+
+@application.route('/healthz')
+def health():
+    return 'ok'
+
+
+@application.route('/configz')
+def config():
+    configz = {'health': 'ok'}
+    for key in CONFIG_VARZ:
+        varz = application.config.get(key)
+        if varz:
+            configz[key.lower()] = str(varz)
+    return make_response(jsonify(configz))
+
 
 @application.route('/api/v1/<migration_id>', methods=['POST'])
 def upload_data(migration_id):
