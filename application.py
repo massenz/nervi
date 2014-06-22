@@ -25,31 +25,24 @@ from flask import (
     make_response,
     jsonify,
     render_template,
-    redirect,
-    request,
-    url_for)
+    request)
 
+from utils import choose, SaneBool
 
-# Constants for program execution - non-configurable
+# TODO: move all logging configuration into its own logging.conf file
 FORMAT = '%(asctime)-15s [%(levelname)s] %(message)s'
 DATE_FMT = '%m/%d/%Y %H:%M:%S'
 
 #: Flask App, must be global
 application = Flask(__name__)
 
-#: When deployed on Beanstalk, ``application.config`` seems to be unavailable; using this instead
-app_config = {}
 
 # TODO: read from config.yaml instead
 MAX_RETRIES = 30
 RETRY_INTERVAL = 1
 DEFAULT_NAME = 'migration_logs'
 
-# TODO: Move to a configuration method, values retrieved from config.yaml and parse_args()
-application.config['SECRET_KEY'] = 'not4zekret'
-
-CONFIG_VARZ = ('DEBUG', 'TESTING', 'WORKDIR', 'SESSION_COOKIE_DOMAIN', 'SESSION_COOKIE_PATH',
-               'RUNNING_AS', 'SECRET_KEY')
+SENSITIVE_KEYS = ('SESSION_COOKIE_DOMAIN', 'SESSION_COOKIE_PATH', 'RUNNING_AS', 'SECRET_KEY')
 
 
 class ResponseError(Exception):
@@ -81,9 +74,9 @@ class FileNotFound(ResponseError):
 
 
 def get_workdir():
-    workdir = app_config.get('WORKDIR')
+    workdir = application.config.get('WORKDIR')
     if not workdir or not os.path.isabs(workdir):
-        raise ValueError('{0} not an absolute path'.format(workdir))
+        raise ResponseError('{0} not an absolute path'.format(workdir))
     return workdir
 
 
@@ -113,7 +106,17 @@ def find_most_recent(migration_id, ext):
             return os.path.join(workdir, fname)
     raise FileNotFound("Could not find logs for {id}".format(id=migration_id))
 
+
+def get_data(fname):
+    if not os.path.exists(fname):
+        raise FileNotFound("Could not find log files for {name}".format(name=fname))
+    with open(fname, 'r') as logs_data:
+        return logs_data.read()
+
+
+#
 # Views
+#
 @application.route('/')
 def home():
     return render_template('index.html', workdir=get_workdir())
@@ -135,18 +138,20 @@ def get_configs():
     :return: a JSON response with the currently configured application values
     """
     configz = {'health': health()}
-    for key in CONFIG_VARZ:
-        varz = application.config.get(key) or app_config.get(key)
-        if varz:
-            configz[key.lower()] = str(varz)
+    is_debug = application.config.get('DEBUG')
+    for key in application.config.keys():
+        # In a non-debug session, sensitive config values are masked
+        # TODO: it would be probably better to hash them (with a secure hash such as SHA-256)
+        # using the application.config['SECRET_KEY']
+        if not is_debug and key in SENSITIVE_KEYS:
+            varz = "*******"
+        else:
+            varz = application.config.get(key)
+        # Basic types can be sent back as they are, others need to be converted to strings
+        if varz is not None and not (isinstance(varz, bool) or isinstance(varz, int)):
+            varz = str(varz)
+        configz[key.lower()] = varz
     return make_response(jsonify(configz))
-
-
-def get_data(fname):
-    if not os.path.exists(fname):
-        raise FileNotFound("Could not find log files for {name}".format(name=fname))
-    with open(fname, 'r') as logs_data:
-        return logs_data.read()
 
 
 @application.route('/api/v1/<migration_id>', methods=['GET', 'HEAD'])
@@ -220,77 +225,26 @@ def prepare_env(config=None):
     :param config: an optional L{Namespace} object, obtained from parsing the options
     :type config: argparse.Namespace or None
     """
-    if not app_config.get('INITIALIZED'):
-        app_config['DEBUG'] = choose('FLASK_DEBUG', False, config, 'debug')
-        application.config['DEBUG'] = app_config.get('DEBUG')
-        application.config['TESTING'] = choose('FLASK_TESTING', True)
-        app_config['WORKDIR'] = choose('FLASK_WORKDIR', '/tmp', config, 'work_dir')
-        app_config['RUNNING_AS'] = choose('USER', '', config)
-        verbose = choose('FLASK_DEBUG', False, config, 'verbose')
+    if not application.config.get('INITIALIZED'):
+        # app_config['RUNNING_AS'] = choose('USER', '', config)
+        verbose = SaneBool(choose('FLASK_DEBUG', False, config, 'verbose'))
+
+        # Loggin configuration
+        # TODO: move to a loogin.yaml configuration with proper handlers and loggers configuration
         loglevel = logging.DEBUG if verbose else logging.INFO
         logging.basicConfig(format=FORMAT, datefmt=DATE_FMT, level=loglevel)
-        app_config['INITIALIZED'] = True
+
+        # Flask application configuration
+        application.config['DEBUG'] = SaneBool(choose('FLASK_DEBUG', False, config, 'debug'))
+        application.config['TESTING'] = choose('FLASK_TESTING', False)
+        application.config['SECRET_KEY'] = choose('FLASK_SECRET_KEY', 'd0n7useth15', config,
+                                                  'secret_key')
+        application.config['WORKDIR'] = choose('FLASK_WORKDIR', '/tmp', config, 'workdir')
+
+        application.config['INITIALIZED'] = True
 
 
-# We should really 'unify' the variable names, between configuration, osenv and yaml
-# However, one big hurdle is the fact that customarily they follow different conventions, and to
-# add to the complexity, YAML would generate them with dotted notation, which bash wouldn't even
-# allow as env vars.
-# One option would be 'encode' all the keys to all lowercase, and replace dots with underscores
-def choose(key, default, config=None, config_attr=None):
-    """ Helper method to retrieve a config value that may (or may) not have been defined
-
-    This method tries (safely) to return a configuration option from a configuration object (
-    possibly None) the OS Env and, finally a default value.
-
-    In priority descending order, it will return:
-
-    - the option from the ```config``` object;
-    - the OS Env variable value
-    - the default value
-
-    :param key: the name of the option to retrieve
-    :type key: str
-    :param default: the default value to return, if all else fails
-    :param config: an optional configuration namespace, as returned by ```argparse```
-    :type config: L{argparse.Namespace}
-    :param config_attr: optionally, the config attribute name may be different from ```key```
-    :type config_attr: str or None
-    :return: the value of the option
-    :rtype: str
-    """
-    # TODO: should add the option to use a YAML configuration file
-    config_attr = config_attr or key
-    if config and hasattr(config, config_attr):
-        return getattr(config, config_attr)
-    os_env_value = os.getenv(key)
-    return os_env_value or default
 
 
-def parse_args():
-    """ Parse command line arguments and returns a configuration object
-    """
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-p', '--port', help="The port for the server to listen on", type=int,
-                        default=5050)
-    parser.add_argument('-v', '--verbose', action='store_true', help='Enables debug logging')
-    parser.add_argument('--debug', action='store_true', help="Turns on debugging/testing mode and "
-                                                             "disables authentication")
-    parser.add_argument('--work-dir', help="Where to store files, must be an absolute path",
-                        default='/var/lib/migration-logs')
-    return parser.parse_args()
 
 
-def run_server():
-    """ Starts the server, after configuring some application values.
-        This is **not** executed by the Beanstalk framework
-
-    :return:
-    """
-    config = parse_args()
-    prepare_env(config)
-    application.run(host='0.0.0.0', debug=config.debug, port=config.port)
-
-
-if __name__ == '__main__':
-    run_server()
