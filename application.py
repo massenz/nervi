@@ -46,10 +46,10 @@ RETRY_INTERVAL = 1
 DEFAULT_NAME = 'migration_logs'
 
 # TODO: Move to a configuration method, values retrieved from config.yaml and parse_args()
-application.config['SECRET_KEY'] = 'ur7b3xfapm'
+application.config['SECRET_KEY'] = 'not4zekret'
 
 CONFIG_VARZ = ('DEBUG', 'TESTING', 'WORKDIR', 'SESSION_COOKIE_DOMAIN', 'SESSION_COOKIE_PATH',
-               'RUNNING_AS')
+               'RUNNING_AS', 'SECRET_KEY')
 
 
 class ResponseError(Exception):
@@ -208,7 +208,6 @@ def handle_invalid_usage(error):
 
 @application.before_first_request
 def config_app():
-    logging.basicConfig(format=FORMAT, datefmt=DATE_FMT, level=logging.DEBUG)
     prepare_env()
 
 
@@ -222,11 +221,50 @@ def prepare_env(config=None):
     :type config: argparse.Namespace or None
     """
     if not app_config.get('INITIALIZED'):
-        application.config['DEBUG'] = os.getenv('FLASK_DEBUG', True) if not config else config.debug
-        application.config['TESTING'] = os.getenv('FLASK_TESTING', True)
-        app_config['WORKDIR'] = os.getenv('FLASK_WORKDIR', '/tmp') if not config else config.work_dir
-        app_config['RUNNING_AS'] = os.getenv('USER', '')
+        app_config['DEBUG'] = choose('FLASK_DEBUG', False, config, 'debug')
+        application.config['DEBUG'] = app_config.get('DEBUG')
+        application.config['TESTING'] = choose('FLASK_TESTING', True)
+        app_config['WORKDIR'] = choose('FLASK_WORKDIR', '/tmp', config, 'work_dir')
+        app_config['RUNNING_AS'] = choose('USER', '', config)
+        verbose = choose('FLASK_DEBUG', False, config, 'verbose')
+        loglevel = logging.DEBUG if verbose else logging.INFO
+        logging.basicConfig(format=FORMAT, datefmt=DATE_FMT, level=loglevel)
         app_config['INITIALIZED'] = True
+
+
+# We should really 'unify' the variable names, between configuration, osenv and yaml
+# However, one big hurdle is the fact that customarily they follow different conventions, and to
+# add to the complexity, YAML would generate them with dotted notation, which bash wouldn't even
+# allow as env vars.
+# One option would be 'encode' all the keys to all lowercase, and replace dots with underscores
+def choose(key, default, config=None, config_attr=None):
+    """ Helper method to retrieve a config value that may (or may) not have been defined
+
+    This method tries (safely) to return a configuration option from a configuration object (
+    possibly None) the OS Env and, finally a default value.
+
+    In priority descending order, it will return:
+
+    - the option from the ```config``` object;
+    - the OS Env variable value
+    - the default value
+
+    :param key: the name of the option to retrieve
+    :type key: str
+    :param default: the default value to return, if all else fails
+    :param config: an optional configuration namespace, as returned by ```argparse```
+    :type config: L{argparse.Namespace}
+    :param config_attr: optionally, the config attribute name may be different from ```key```
+    :type config_attr: str or None
+    :return: the value of the option
+    :rtype: str
+    """
+    # TODO: should add the option to use a YAML configuration file
+    config_attr = config_attr or key
+    if config and hasattr(config, config_attr):
+        return getattr(config, config_attr)
+    os_env_value = os.getenv(key)
+    return os_env_value or default
 
 
 def parse_args():
@@ -250,8 +288,6 @@ def run_server():
     :return:
     """
     config = parse_args()
-    loglevel = logging.DEBUG if config.verbose else logging.INFO
-    logging.basicConfig(format=FORMAT, datefmt=DATE_FMT, level=loglevel)
     prepare_env(config)
     application.run(host='0.0.0.0', debug=config.debug, port=config.port)
 
