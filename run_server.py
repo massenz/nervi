@@ -31,6 +31,8 @@ def parse_args():
     parser.add_argument('--secret-key', help='Used by the flask server to encrypt secure cookies')
     parser.add_argument('--workdir', help="Where to store files, must be an absolute path",
                         default='/var/lib/migration-logs')
+    parser.add_argument('--db_uri', help='The URI to the MongoDB server',
+                        default='mongodb://localhost:27017')
     return parser.parse_args()
 
 
@@ -42,7 +44,9 @@ def run_server():
     """
     config = parse_args()
     prepare_env(config)
-    application.run(host='0.0.0.0', debug=config.debug, port=config.port)
+    application.run(host='0.0.0.0',
+                    debug=config.debug,
+                    port=config.port)
 
 
 if __name__ == '__main__':

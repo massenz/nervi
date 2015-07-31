@@ -89,7 +89,7 @@ def build_fname(migration_id, ext):
         prefix=prefix, name=DEFAULT_NAME, ext=ext))
 
 
-def find_most_recent(migration_id, ext):
+def find_most_recent(ext):
     """ Returns the most recent file matching the given extension, for the Migration ID
 
     :param migration_id: the unique ID of the migration for the logs
@@ -97,32 +97,38 @@ def find_most_recent(migration_id, ext):
     :return: the most recent filename that matches the ID and extension
     :raises: FileNotFound if the file does not exist
     """
-    workdir = os.path.join(get_workdir(), migration_id)
-    files = [f for f in os.listdir(workdir) if os.path.isfile(os.path.join(workdir, f))]
+    # TODO: for now there will only be one file, in future there may be many,
+    #     all named as in `{YYYYmmdd}_outliers.json`
+    full_name = 'outliers.{ext}'.format(ext=ext)
+    files = [f for f in os.listdir(get_workdir()) if os.path.isfile(os.path.join(get_workdir(), f))]
     files.sort(reverse=True)
     for fname in files:
         # TODO: should match the pattern, beyond the simple extension matching
-        if fname.endswith('.{ext}'.format(ext=ext)):
-            return os.path.join(workdir, fname)
-    raise FileNotFound("Could not find logs for {id}".format(id=migration_id))
+        if fname == full_name:
+            return os.path.join(get_workdir(), fname)
+    raise FileNotFound("Could not find data file for {}".format(full_name))
 
 
 def get_data(fname):
     if not os.path.exists(fname):
-        raise FileNotFound("Could not find log files for {name}".format(name=fname))
-    with open(fname, 'r') as logs_data:
-        return logs_data.read()
+        raise FileNotFound("Could not find outliers data for {name}".format(name=fname))
+    with open(fname, 'r') as outliers:
+        return outliers.read()
 
 
 #
 # Views
 #
+def get_db_uri():
+    return application.config['DB_URI']
+
+
 @application.route('/')
 def home():
-    return render_template('index.html', workdir=get_workdir())
+    return render_template('index.html', workdir=get_workdir(), db_uri=get_db_uri())
 
 
-@application.route('/healthz')
+@application.route('/health')
 def health():
     """ A simple health-chek endpoint (can be used as a heartbeat too).
 
@@ -131,7 +137,7 @@ def health():
     return 'ok'
 
 
-@application.route('/configz')
+@application.route('/config')
 def get_configs():
     """ Configuration values
 
@@ -154,8 +160,8 @@ def get_configs():
     return make_response(jsonify(configz))
 
 
-@application.route('/api/v1/<migration_id>', methods=['GET', 'HEAD'])
-def download_data(migration_id):
+@application.route('/api/v1/outliers', methods=['GET', 'HEAD'])
+def download_data():
     """ Retrieves the log files for a Migration
 
         If there are more than one set of log files with the given extension for the same ID,
@@ -166,17 +172,12 @@ def download_data(migration_id):
     :return: a response that will direct the client to download the file (instead of displaying
         it in the browser), by using the "Content-Disposition" header
     """
-    try:
-        as_uuid = uuid.UUID(migration_id)
-    except ValueError:
-        raise UuidNotValid("Could not convert {0} to a valid UUID".format(migration_id))
-    logging.info('Downloading logs data for {0}'.format(as_uuid))
     # TODO: use a query arg for the file name extension, or even the full name
-    file_type = request.args.get('type', 'zip')
-    fname = find_most_recent(migration_id, ext=file_type)
+    file_type = request.args.get('type', 'json')
+    fname = find_most_recent(ext=file_type)
+    logging.info('Sending outliers data from {}'.format(fname))
     response = make_response()
-    response.headers["Content-Disposition"] = "attachment; filename={name}".format(
-        name=os.path.basename(fname))
+    response.headers["Content-Type"] = "application/json"
     response.data = get_data(fname)
     return response
 
@@ -242,9 +243,4 @@ def prepare_env(config=None):
         application.config['WORKDIR'] = choose('FLASK_WORKDIR', '/tmp', config, 'workdir')
 
         application.config['INITIALIZED'] = True
-
-
-
-
-
-
+        application.config['DB_URI'] = choose('DB_URI', '', config, 'db_uri')

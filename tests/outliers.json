@@ -1,0 +1,114 @@
+[
+  {
+    "kind": "AGRESSIVE_SLAVE_CPU_LOAD",
+    "detectionStartTime": 1438270344.13519,
+    "detectionEndTime": 1438280344.13519,
+    "detectedAt": 1438280344.13519,
+    "details": {
+      "slaveId": "20150730-181748-1963327498-5050-2079-S3"
+    },
+    "timeline": [
+      {
+        "samplePeriod": "Every1Seconds",
+        "data": [
+          {
+            "value": 6,
+            "time": 1438271344.13519
+          },
+          {
+            "value": 6,
+            "time": 1438272344.13519
+          },
+          {
+            "value": 6,
+            "time": 1438273344.13519
+          },
+          {
+            "value": 6,
+            "time": 1438274344.13519
+          },
+          {
+            "value": 6,
+            "time": 1438275344.13519
+          },
+          {
+            "value": 6,
+            "time": 1438276344.13519
+          },
+          {
+            "value": 6,
+            "time": 1438277344.13519
+          },
+          {
+            "value": 6,
+            "time": 1438278344.13519
+          },
+          {
+            "value": 6,
+            "time": 1438279344.13519
+          },
+          {
+            "value": 6,
+            "time": 1438280344.13519
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "AGRESSIVE_SLAVE_CPU_LOAD",
+    "detectionStartTime": 1438270344.13519,
+    "detectionEndTime": 1438280344.13519,
+    "detectedAt": 1438280344.13519,
+    "details": {
+      "slaveId": "20150730-181748-1963327498-5050-2079-S9"
+    },
+    "timeline": [
+      {
+        "samplePeriod": "Every1Seconds",
+        "data": [
+          {
+            "value": 6,
+            "time": 1438271344.13519
+          },
+          {
+            "value": 6,
+            "time": 1438272344.13519
+          },
+          {
+            "value": 6,
+            "time": 1438273344.13519
+          },
+          {
+            "value": 6,
+            "time": 1438274344.13519
+          },
+          {
+            "value": 6,
+            "time": 1438275344.13519
+          },
+          {
+            "value": 6,
+            "time": 1438276344.13519
+          },
+          {
+            "value": 6,
+            "time": 1438277344.13519
+          },
+          {
+            "value": 6,
+            "time": 1438278344.13519
+          },
+          {
+            "value": 6,
+            "time": 1438279344.13519
+          },
+          {
+            "value": 6,
+            "time": 1438280344.13519
+          }
+        ]
+      }
+    ]
+  }
+]
