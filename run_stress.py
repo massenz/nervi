@@ -109,10 +109,13 @@ def main(conf):
     buckets = Buckets(response_times, 20)
     bucket_data = os.path.join(conf.workdir, 'stress-test-buckets.csv')
     with open(bucket_data, 'w') as d:
-        d.write("Min: {b.lowever_bound}, Max: {b.upper_bound}, Buckets: {b.buckets}".format(
+        d.write("Min: {b.lower_bound:.3f}, Max: {b.upper_bound:.3f}".format(
             b=buckets))
+        x = buckets.lower_bound
+        step = buckets.step
         for val in buckets.get_buckets():
-            d.write("{}\n".format(val))
+            d.write("{:.4f},{:4f}\n".format(x, val))
+            x += step
     logging.info("Response distribution saved in: {}".format(bucket_data))
 
 

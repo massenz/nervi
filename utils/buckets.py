@@ -11,8 +11,8 @@ class Buckets(object):
         self.data = []
         for val in data:
             self.data.append(val)
-        self.step = (self.upper_bound - self.lower_bound) / buckets
-        self.buckets = [0 for _ in range(self.buckets)]
+        self.step = float(self.upper_bound - self.lower_bound) / buckets
+        self.buckets = [0 for _ in range(buckets)]
         self.computed = False
 
     def get_buckets(self):
@@ -20,8 +20,10 @@ class Buckets(object):
             return self.buckets
 
         for value in self.data:
-            if value < self.lower_bound or value > self.upper_bound:
+            if value < self.lower_bound or value > self.upper_bound + self.step:
                 continue
-            bucket = (float(value) - self.lower_bound) / self.step
-            self.buckets[bucket] += 1
+            bucket = int((float(value) - self.lower_bound) / self.step)
+            if 0 <= bucket < len(self.buckets):
+                self.buckets[bucket] += 1
+        self.computed = True
         return self.buckets
