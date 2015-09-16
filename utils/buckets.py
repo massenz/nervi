@@ -6,13 +6,16 @@ __author__ = 'marco'
 
 class Buckets(object):
     def __init__(self, data, buckets):
+        self.buckets = [0 for _ in range(buckets)]
+        if not data:
+            self.computed = True
+            return
         self.lower_bound = min(data)
         self.upper_bound = max(data)
         self.data = []
         for val in data:
             self.data.append(val)
         self.step = float(self.upper_bound - self.lower_bound) / buckets
-        self.buckets = [0 for _ in range(buckets)]
         self.computed = False
 
     def get_buckets(self):

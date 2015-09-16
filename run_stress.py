@@ -26,6 +26,15 @@ from utils import SaneBool, choose
 from utils.buckets import Buckets
 from utils.stress import StressRequestor
 
+STRESS_TEST_CSV = 'stress-test.csv'
+#: File name for the response data, raw, as obtained during the test.
+
+STRESS_TEST_BUCKETS_CSV = 'stress-test-buckets.csv'
+# File name for the actual data, distributed over a number of "buckets"
+
+MIN_DATA_SIZE = 50
+#: Minimum size for data sample to be considered valid
+
 __author__ = 'marco'
 
 
@@ -39,33 +48,33 @@ def parse_args():
     """ Parse command line arguments and returns a configuration object
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument('-p', '--port', help="The port for the server to listen on", type=int,
-                        default=8080)
-    parser.add_argument('-v', '--verbose', action='store_true', help='Enables debug logging')
-    parser.add_argument('--debug', action='store_true', help="Turns on debugging/testing mode and "
-                                                             "disables authentication")
-    parser.add_argument('--workdir', help="Where to store files, must be an absolute path",
-                        default='/var/lib/migration-logs')
+    parser.add_argument('--buckets', '-b', type=int, default=20,
+                        help="Number of buckets to distribute response data over")
+    parser.add_argument('--duration', '-d', type=int, default=30,
+                        help="Duration of the test, in seconds")
     parser.add_argument('--endpoint', help='The URL for Marathon REST endpoint to hit',
                         default='/v2/tasks')
-    parser.add_argument('--ip', help="The Marathon server's IP address",
-                        default="localhost")
     parser.add_argument('--insecure', action='store_false',
                         help="Whether to use HTTP instead of HTTPS")
-    parser.add_argument('--pool-size', type=int, default=20,
-                        help="Size of thread pool to hit the server")
-    parser.add_argument('--randomize', action='store_true',
-                        help="Whether to randomize the interval between requests")
     parser.add_argument('--interval', type=float, default=0.5,
                         help="Interval, in seconds, between requests (will be assumed to be "
                              "the mean value, if used in conjunction with --randomize")
+    parser.add_argument('--pool-size', type=int, default=20,
+                        help="Size of thread pool to hit the server")
+    parser.add_argument('-p', '--port', help="The port for the server to listen on", type=int,
+                        default=80)
+    parser.add_argument('--randomize', action='store_true',
+                        help="Whether to randomize the interval between requests")
     parser.add_argument('--stddev', type=float, default=0.1,
                         help="If randomize is defined, will be the stddev for the random interval "
                              "distribution in seconds")
-    parser.add_argument('--duration', '-d', type=int, default=30,
-                        help="Duration of the test, in seconds")
     parser.add_argument('--timeout', '-t', type=int, default=5,
                         help="Max allowed timeout from the server, before considering it dead")
+    parser.add_argument('-v', '--verbose', action='store_true', help='Enables debug logging')
+    parser.add_argument('--workdir', help="Where to store files, must be an absolute path",
+                        default='/var/lib/migration-logs')
+    parser.add_argument('ip', help="The server's IP address",
+                        default="localhost")
     return parser.parse_args()
 
 
@@ -96,18 +105,30 @@ def main(conf):
 
     stressor = StressRequestor(url=make_uri(conf), count=conf.pool_size, interval=conf.interval,
                                duration=conf.duration, timeout=conf.timeout)
-    stressor.run()
+    try:
+        stressor.run()
+    except KeyboardInterrupt:
+        stressor.abort()
+        logging.info("Stress test terminated by the user")
+        while not stressor.done:
+            time.sleep(0.100)
+            if not stressor.done:
+                logging.warning("Waiting for threads to complete and exit")
 
+    # TODO(marco): use the `csv` module instead of this homemade ugliness
     response_times = stressor.response_times
-    data = os.path.join(conf.workdir, 'stress-test.csv')
+    if len(response_times) < MIN_DATA_SIZE:
+        logging.error("Not enough data ({}): data will not be saved.".format(response_times))
+
+    data = os.path.join(conf.workdir, STRESS_TEST_CSV)
     with open(data, 'w') as d:
         for val in response_times:
             d.write("{}\n".format(val))
     logging.info("Data saved in: {}".format(data))
     logging.info("Finished in {}".format(time.time() - start))
 
-    buckets = Buckets(response_times, 20)
-    bucket_data = os.path.join(conf.workdir, 'stress-test-buckets.csv')
+    buckets = Buckets(response_times, conf.buckets)
+    bucket_data = os.path.join(conf.workdir, STRESS_TEST_BUCKETS_CSV)
     with open(bucket_data, 'w') as d:
         d.write("Min: {b.lower_bound:.3f}, Max: {b.upper_bound:.3f}".format(
             b=buckets))
