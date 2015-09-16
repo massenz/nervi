@@ -146,10 +146,10 @@ def save_data(conf, response_times):
 
 
 if __name__ == '__main__':
-    logging.info("Starting REST API stress tests")
 
     config = prepare()
 
+    logging.info("Starting REST API stress tests")
     logging.info("Configuration values: {}".format(config))
     logging.info("URL to stress-test: {}".format(make_uri(config)))
 
