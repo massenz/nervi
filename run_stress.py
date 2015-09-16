@@ -32,7 +32,7 @@ STRESS_TEST_CSV = 'stress-test.csv'
 STRESS_TEST_BUCKETS_CSV = 'stress-test-buckets.csv'
 # File name for the actual data, distributed over a number of "buckets"
 
-MIN_DATA_SIZE = 50
+MIN_DATA_SIZE = 10
 #: Minimum size for data sample to be considered valid
 
 __author__ = 'marco'
@@ -93,15 +93,15 @@ def prepare():
 
 
 def make_uri(cfg):
+    """ Builds a complete URI from user-supplied configuration
+
+    :rtype : str
+    """
     scheme = 'http' if cfg.insecure else 'https'
     return "{scheme}://{cfg.ip}:{cfg.port}{cfg.endpoint}".format(scheme=scheme, cfg=cfg)
 
 
-def main(conf):
-    start = time.time()
-    logging.info("Starting Marathon REST API stress tests")
-    logging.info("Configuration values: {}".format(conf))
-    logging.info("URL to stress-test: {}".format(make_uri(conf)))
+def run_test(conf):
 
     stressor = StressRequestor(url=make_uri(conf), count=conf.pool_size, interval=conf.interval,
                                duration=conf.duration, timeout=conf.timeout)
@@ -111,21 +111,26 @@ def main(conf):
         stressor.abort()
         logging.info("Stress test terminated by the user")
         while not stressor.done:
-            time.sleep(0.100)
+            time.sleep(2)
             if not stressor.done:
-                logging.warning("Waiting for threads to complete and exit")
+                logging.warning("Waiting for threads to complete and exit...")
 
+    return stressor.response_times
+
+
+def save_data(conf, response_times):
+    # TODO(marco): move the data save to a persistence class and allow user to choose format
     # TODO(marco): use the `csv` module instead of this homemade ugliness
-    response_times = stressor.response_times
+
     if len(response_times) < MIN_DATA_SIZE:
         logging.error("Not enough data ({}): data will not be saved.".format(response_times))
+        return
 
     data = os.path.join(conf.workdir, STRESS_TEST_CSV)
     with open(data, 'w') as d:
         for val in response_times:
             d.write("{}\n".format(val))
     logging.info("Data saved in: {}".format(data))
-    logging.info("Finished in {}".format(time.time() - start))
 
     buckets = Buckets(response_times, conf.buckets)
     bucket_data = os.path.join(conf.workdir, STRESS_TEST_BUCKETS_CSV)
@@ -141,5 +146,15 @@ def main(conf):
 
 
 if __name__ == '__main__':
+    logging.info("Starting REST API stress tests")
+
     config = prepare()
-    main(config)
+
+    logging.info("Configuration values: {}".format(config))
+    logging.info("URL to stress-test: {}".format(make_uri(config)))
+
+    start = time.time()
+    response_times = run_test(config)
+    logging.info("Run completed in {}".format(time.time() - start))
+
+    save_data(config, response_times)

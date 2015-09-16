@@ -58,6 +58,27 @@ The stress test will last approx 3 minutes (``duration`` is 180 seconds), after 
 thread will wait for the pool of threads to complete and will exit orderly.
 
 
+Installation
+------------
+
+::
+
+    TODO: create a Dockerfile
+
+Currently the best way to install and run this is to clone the repo, create a virtual environment
+ and then install necessary third-party libraries using ``pip install``::
+
+    # Use virtualenvwrapper: https://virtualenvwrapper.readthedocs.org/en/latest/
+    mkvirtualenv nervi
+    git clone git@github.com:massenz/nervi.git
+    # for unauthenticated access to github, use the HTTPS endpoint:
+    #  git clone https://github.com/massenz/nervi.git
+    cd nervi
+    pip install --upgrade -r requirements.txt
+
+This should hopefully be sufficient to get you going.
+Obviously a Docker container would be a preferable option: stay tuned!
+
 Output
 ------
 
