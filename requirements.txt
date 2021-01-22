@@ -1,11 +1,9 @@
 # Requirements for simple-flask
 
-argparse==1.2.1
+argparse
 nose
-python-dateutil==2.2
+python-dateutil
 requests
-simplejson==3.3.2
-six==1.5.2
-virtualenv==1.11.2
-virtualenvwrapper==4.2
-wsgiref==0.1.2
+simplejson
+six
+
